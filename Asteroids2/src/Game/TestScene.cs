@@ -19,12 +19,5 @@ namespace Asteroids2
             actor.Transform.LocalPosition = new Vector2(100, 100);
             AddActor(actor);
         }
-
-        public override void Update(double deltaTime)
-        {
-            base.Update(deltaTime);
-
-            
-        }
     }
 }

@@ -67,7 +67,7 @@ namespace Asteroids2
 
         public void Run()
         {
-            Raylib.InitWindow(800, 800, "swas");
+            Raylib.InitWindow(800, 800, "Asteroids 2");
 
             // timing stuff
             Stopwatch stopwatch = new Stopwatch();
