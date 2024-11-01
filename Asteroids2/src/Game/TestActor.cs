@@ -10,7 +10,8 @@ namespace Asteroids2
 {
     internal class TestActor : Actor
     {
-        public float Speed { get; set; } = 50;
+        public float Speed { get; set; } = 150;
+        private Color _color = Color.Pink;
         public override void Update(double deltaTime)
         {
             base.Update(deltaTime);
@@ -22,7 +23,12 @@ namespace Asteroids2
             if (deltaMovement.Magnitude != 0)
                 Transform.Translate(deltaMovement);
 
-            Raylib.DrawRectangleV(Transform.GlobalPosition, Transform.GlobalScale * 100, Color.Pink);
+            Raylib.DrawCircleV(Transform.GlobalPosition, 50, _color);
+        }
+
+        public override void OnCollision(Actor other)
+        {
+            _color = Color.Red;
         }
     }
 }

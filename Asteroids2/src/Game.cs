@@ -79,6 +79,8 @@ namespace Asteroids2
             Scene testScene = new TestScene();
             AddScene(testScene);
 
+            CurrentScene.Start();
+
             while (!Raylib.WindowShouldClose())
             {
                 currentTime = stopwatch.ElapsedMilliseconds;

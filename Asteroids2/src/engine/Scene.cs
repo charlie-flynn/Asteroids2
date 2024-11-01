@@ -31,11 +31,28 @@ namespace Asteroids2
             foreach (Actor actor in _actors)
             {
                 if (!actor.Started)
-                {
                     actor.Start();
-                }
 
                 actor.Update(deltaTime);
+            }
+
+            // check for collision
+            for (int row = 0; row < _actors.Count; row++)
+            {
+                for (int column = row; column < _actors.Count; column++)
+                {
+                    if (row == column)
+                        continue;
+
+                    // if both colliders are valid, check collision
+                    if (_actors[row].Collider != null && _actors[column].Collider != null)
+                        if (_actors[row].Collider.CheckCollision(_actors[column]))
+                        {
+                            _actors[row].OnCollision(_actors[column]);
+                            _actors[column].OnCollision(_actors[row]);
+                        }
+
+                }
             }
         }
 
