@@ -22,7 +22,7 @@ namespace Asteroids2
             
             set
             {
-                Math.Clamp(_momentum, 0.0f, 2.0f);
+                _momentum = Math.Clamp((float)value, 0.0f, 500.0f);
             }
         }
         public override void Update(double deltaTime)
@@ -32,28 +32,28 @@ namespace Asteroids2
 
             // movement code
             if (Raylib.IsKeyDown(KeyboardKey.W))
-                _momentum += _acceleration;
+                Momentum += _acceleration;
             else
-                _momentum -= _decceleration;
+                Momentum -= _decceleration;
 
-            if (_momentum > 0)
-                Transform.Translate(Transform.Forward * _momentum * (float)deltaTime);
+            if (Momentum > 0.0f)
+                Transform.Translate(Transform.Forward * Momentum * (float)deltaTime);
 
             if (Raylib.IsKeyDown(KeyboardKey.A) || Raylib.IsKeyDown(KeyboardKey.D))
                 Transform.Rotate((float)-((Raylib.IsKeyDown(KeyboardKey.A) - Raylib.IsKeyDown(KeyboardKey.D)) * (Math.PI / 180) * _turnSpeed * deltaTime));
 
             // looping around the screen code
-            if (Transform.GlobalPosition.x > Raylib.GetScreenWidth() + Transform.GlobalScale.Magnitude)
-                Transform.Translate(-Raylib.GetScreenWidth(), 0);
+            if (Transform.GlobalPosition.x > Raylib.GetScreenWidth() + Transform.GlobalScale.Magnitude * 20)
+                Transform.Translate(-Raylib.GetScreenWidth() - Transform.GlobalScale.Magnitude * 20, 0);
 
-            if (Transform.GlobalPosition.x < 0 - Transform.GlobalScale.Magnitude)
-                Transform.Translate(Raylib.GetScreenWidth(), 0);
+            if (Transform.GlobalPosition.x < 0 - Transform.GlobalScale.Magnitude * 20)
+                Transform.Translate(Raylib.GetScreenWidth() + Transform.GlobalScale.Magnitude * 20, 0);
 
-            if (Transform.GlobalPosition.y > Raylib.GetScreenHeight() + Transform.GlobalScale.Magnitude)
-                Transform.Translate(0, -Raylib.GetScreenHeight());
+            if (Transform.GlobalPosition.y > Raylib.GetScreenHeight() + Transform.GlobalScale.Magnitude * 20)
+                Transform.Translate(0, -Raylib.GetScreenHeight() - Transform.GlobalScale.Magnitude * 20);
 
-            if (Transform.GlobalPosition.y < 0 - Transform.GlobalScale.Magnitude)
-                Transform.Translate(0, Raylib.GetScreenHeight());
+            if (Transform.GlobalPosition.y < 0 - Transform.GlobalScale.Magnitude * 20)
+                Transform.Translate(0, Raylib.GetScreenHeight() + Transform.GlobalScale.Magnitude * 20);
 
             // drawing
             Raylib.DrawPoly(
@@ -66,6 +66,7 @@ namespace Asteroids2
             Raylib.DrawLineV(Transform.GlobalPosition,
             Transform.GlobalPosition + (Transform.Forward * Transform.LocalScale.x * 80),
             Color.SkyBlue);
+            Raylib.DrawText(Momentum.ToString(), 10, 10, 10, Color.Purple);
         }
 
         public override void OnCollision(Actor other)
