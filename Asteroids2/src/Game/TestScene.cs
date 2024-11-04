@@ -12,15 +12,15 @@ namespace Asteroids2
     internal class TestScene : Scene
     {
         Actor _gabooey;
+        Player _player;
         public override void Start()
         {
             base.Start();
 
-            // Add iyr (new neopronoun i just made up) cool actor
-            Actor actor = new TestActor();
-            actor.Transform.LocalPosition = new Vector2(100, 100);
-            AddActor(actor);
-            actor.Collider = new CircleCollider(actor, 50);
+            _player = (Player)Actor.Instantiate(new Player(), null, new Vector2(50, 50), 0, "Player");
+            AddActor(_player);
+
+
 
 
             _gabooey = Actor.Instantiate(new Actor("Gabooey"), null, new Vector2(400, 400), 0, "Gabooey");
@@ -31,6 +31,7 @@ namespace Asteroids2
         public override void Update(double deltaTime)
         {
             base.Update(deltaTime);
+
             Raylib.DrawCircleV(_gabooey.Transform.GlobalPosition, _gabooey.Transform.GlobalScale.x * 100, Color.Green);
         }
     }
