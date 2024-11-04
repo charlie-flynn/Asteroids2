@@ -67,6 +67,21 @@ namespace Asteroids2
             return actor;
         }
 
+        public static void Destroy(Actor actor)
+        {
+            // remove children
+            foreach (Transform2D child in actor.Transform.Children)
+            {
+                actor.Transform.RemoveChild(child);
+            }
+
+            // unchild from parent
+            if (actor.Transform.Parent != null)
+                actor.Transform.Parent.RemoveChild(actor.Transform);
+
+            Game.CurrentScene.RemoveActor(actor);
+        }
+
         public virtual void OnEnable() { }
         public virtual void OnDisable() { }
         public virtual void Start()

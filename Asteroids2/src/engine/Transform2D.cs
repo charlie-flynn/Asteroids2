@@ -103,6 +103,10 @@ namespace Asteroids2
             get { return (float)Math.Atan2(_globalMatrix.m01, _globalMatrix.m00); }
         }
 
+        public Transform2D Parent { get => _parent; }
+
+        public Transform2D[] Children { get => _children; }
+
         // waogh thats a lotta variables up there !  good thing theres no more code !
         // hahaha. just kiddin. more code
 
