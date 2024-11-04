@@ -22,8 +22,14 @@ namespace Asteroids2
             
             set
             {
-                _momentum = Math.Clamp((float)value, 0.0f, 500.0f);
+                _momentum = Math.Clamp((float)value, 0.0f, 750.0f);
             }
+        }
+
+        public override void Start()
+        {
+            base.Start();
+            Transform.LocalScale = new Vector2(30, 30);
         }
         public override void Update(double deltaTime)
         {
@@ -42,30 +48,42 @@ namespace Asteroids2
             if (Raylib.IsKeyDown(KeyboardKey.A) || Raylib.IsKeyDown(KeyboardKey.D))
                 Transform.Rotate((float)-((Raylib.IsKeyDown(KeyboardKey.A) - Raylib.IsKeyDown(KeyboardKey.D)) * (Math.PI / 180) * _turnSpeed * deltaTime));
 
+
+
+            // shooting code
+            if (Raylib.IsKeyPressed(KeyboardKey.Space))
+            {
+                Instantiate(new Bullet(), null, Transform.GlobalPosition, -Transform.GlobalRotationAngle, "Bullet");
+            }
+
             // looping around the screen code
-            if (Transform.GlobalPosition.x > Raylib.GetScreenWidth() + Transform.GlobalScale.Magnitude * 20)
-                Transform.Translate(-Raylib.GetScreenWidth() - Transform.GlobalScale.Magnitude * 20, 0);
+            if (Transform.GlobalPosition.x > Raylib.GetScreenWidth() + Transform.GlobalScale.Magnitude * 2)
+                Transform.Translate(-Raylib.GetScreenWidth() - Transform.GlobalScale.Magnitude * 2, 0);
 
-            if (Transform.GlobalPosition.x < 0 - Transform.GlobalScale.Magnitude * 20)
-                Transform.Translate(Raylib.GetScreenWidth() + Transform.GlobalScale.Magnitude * 20, 0);
+            if (Transform.GlobalPosition.x < 0 - Transform.GlobalScale.Magnitude * 2)
+                Transform.Translate(Raylib.GetScreenWidth() + Transform.GlobalScale.Magnitude * 2, 0);
 
-            if (Transform.GlobalPosition.y > Raylib.GetScreenHeight() + Transform.GlobalScale.Magnitude * 20)
-                Transform.Translate(0, -Raylib.GetScreenHeight() - Transform.GlobalScale.Magnitude * 20);
+            if (Transform.GlobalPosition.y > Raylib.GetScreenHeight() + Transform.GlobalScale.Magnitude * 2)
+                Transform.Translate(0, -Raylib.GetScreenHeight() - Transform.GlobalScale.Magnitude * 2);
 
-            if (Transform.GlobalPosition.y < 0 - Transform.GlobalScale.Magnitude * 20)
-                Transform.Translate(0, Raylib.GetScreenHeight() + Transform.GlobalScale.Magnitude * 20);
+            if (Transform.GlobalPosition.y < 0 - Transform.GlobalScale.Magnitude * 2)
+                Transform.Translate(0, Raylib.GetScreenHeight() + Transform.GlobalScale.Magnitude * 2);
 
             // drawing
-            Raylib.DrawPoly(
-            Transform.GlobalPosition,
+            Raylib.DrawPoly
+            (Transform.GlobalPosition,
             3,
-            Transform.GlobalScale.x * 50,
+            Transform.GlobalScale.x,
             -Transform.GlobalRotationAngle * (180 / (float)Math.PI),
             Color.Pink);
-            Vector2 offset = new Vector2(Transform.LocalScale.x * 40, Transform.LocalScale.y * 40);
-            Raylib.DrawLineV(Transform.GlobalPosition,
-            Transform.GlobalPosition + (Transform.Forward * Transform.LocalScale.x * 80),
+
+            Vector2 offset = new Vector2(Transform.LocalScale.x, Transform.LocalScale.y);
+
+            Raylib.DrawLineV
+            (Transform.GlobalPosition,
+            Transform.GlobalPosition + (Transform.Forward * Transform.LocalScale.x),
             Color.SkyBlue);
+
             Raylib.DrawText(Momentum.ToString(), 10, 10, 10, Color.Purple);
         }
 

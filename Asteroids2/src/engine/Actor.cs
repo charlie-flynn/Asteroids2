@@ -4,6 +4,7 @@ using System.Linq;
 using MathLibrary;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace Asteroids2
 {
@@ -12,6 +13,10 @@ namespace Asteroids2
         private Transform2D _transform;
         private bool _started = false;
         private bool _enabled = true;
+
+        private Component[] _components;
+
+
 
         public string Name { get; set; }
         public bool Started { get => _started; }
@@ -40,6 +45,8 @@ namespace Asteroids2
         public Actor(string name = "Actor")
         {
             Name = name;
+            Transform = new Transform2D(this);
+            _components = new Component[0];
             Start();
         }
 
@@ -87,22 +94,155 @@ namespace Asteroids2
         public virtual void Start()
         {
             _started = true;
-            Transform = new Transform2D(this);
         }
 
         public virtual void Update(double deltaTime)
         {
-            
+            foreach (Component component in _components)
+            {
+                if (!component.Started)
+                    component.Start();
+
+                component.Update(deltaTime);
+            }
         }
 
         public virtual void End()
         {
-
+            foreach (Component component in _components)
+            {
+                component.End();
+            }
         }
 
         public virtual void OnCollision(Actor other)
         {
 
+        }
+
+        // add component
+        public T AddComponent<T>(T component) where T : Component
+        {
+            // Creat temporary array one bigger than _components
+            Component[] temp = new Component[_components.Length + 1];
+
+            // copy over everything in _components into temp
+            for (int i = 0; i < _components.Length; i++)
+            {
+                temp[i] = _components[i];
+            }
+
+            // set the last index in temp to the component we wanna add
+            temp[temp.Length - 1] = component;
+
+            // store temp in _components
+            _components = temp;
+
+            return component;
+        }
+
+        public T AddComponent<T>() where T : Component
+        {
+            T component = (T)new Component(this);
+
+            return AddComponent<T>(component);
+        }
+
+        // remove component
+        public bool RemoveComponent<T>(T component) where T : Component
+        {
+            // if there are no components to remove, don't do anything and leave
+            if (_components.Length == 0)
+                return false;
+
+            if (_components.Length == 1 && _components[0] == component)
+            {
+                _components = new Component[0];
+                return true;
+            }
+
+
+            // create a temporary array to copy everything over and remove the specified component from
+            // then copy it over to the component array if the component was successfully removed
+            Component[] temp = new Component[_components.Length - 1];
+            bool componentRemoved = false;
+            int j = 0;
+
+            for (int i = 0; i < _components.Length; i++)
+            {
+                if (_components[i] != component)
+                {
+                    temp[j] = _components[i];
+                    j++;
+                }
+                else
+                {
+                    componentRemoved = true;
+                }
+            }
+
+
+            if (componentRemoved)
+                _components = temp;
+
+            return componentRemoved;
+        }
+
+        public bool RemoveComponent<T>() where T : Component
+        {
+            T component = GetComponent<T>();
+            if (component != null)
+                return RemoveComponent(component);
+            return false;
+        }
+
+        // get component
+        public T GetComponent<T>() where T: Component
+        {
+            foreach (Component component in _components)
+            {
+                if (component is T)
+                    return (T)component;
+            }
+            return null;
+        }
+        // get more than one component
+        public T[] GetComponents<T>() where T : Component
+        {
+            // create an temp array of the same size as _components
+            T[] temp = new T[_components.Length];
+
+            // copy everything that is T into temp
+            int count = 0;
+
+
+            for (int i = 0; i < _components.Length; i++)
+            {
+                if (_components[i] == (T)_components[i])
+                {
+                    temp[count] = (T)_components[i];
+                    count++;
+                }
+
+            }
+
+            /*
+            foreach (T component in _components)
+            {
+                temp[count] = component;
+                count++;
+            }
+            */
+
+            // trim the array
+            T[] result = new T[count + 1];
+
+            for (int i = 0; i < result.Length; i++)
+            {
+                result[i] = temp[i];
+            }
+
+            return result;
         }
     }
 }

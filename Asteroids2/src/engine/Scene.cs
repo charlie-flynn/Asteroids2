@@ -28,13 +28,21 @@ namespace Asteroids2
 
         public virtual void Update(double deltaTime)
         {
-            foreach (Actor actor in _actors)
+            try
             {
-                if (!actor.Started)
-                    actor.Start();
+                foreach (Actor actor in _actors)
+                {
+                    if (!actor.Started)
+                        actor.Start();
 
-                actor.Update(deltaTime);
+                    actor.Update(deltaTime);
+                }
             }
+            catch
+            {
+                Console.WriteLine("error!");
+            }
+            
 
             // check for collision
             for (int row = 0; row < _actors.Count; row++)
