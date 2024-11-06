@@ -19,6 +19,7 @@ namespace Asteroids2
             _radius = radius;
             _speed = speed;
             Collider = new CircleCollider(this, _radius);
+            Transform.LocalScale += new Vector2(_radius, _radius);
         }
         public override void Start()
         {
