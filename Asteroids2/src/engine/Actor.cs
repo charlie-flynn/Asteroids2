@@ -115,10 +115,7 @@ namespace Asteroids2
             }
         }
 
-        public virtual void OnCollision(Actor other)
-        {
-
-        }
+        public virtual void OnCollision(Actor other) { }
 
         // add component
         public T AddComponent<T>(T component) where T : Component
@@ -155,6 +152,7 @@ namespace Asteroids2
             if (_components.Length == 0)
                 return false;
 
+            // if there is only one component and it is the one we're looking for, remove it
             if (_components.Length == 1 && _components[0] == component)
             {
                 _components = new Component[0];
@@ -226,6 +224,7 @@ namespace Asteroids2
 
             }
 
+            // this was a code i was gonna write but i dont think it works like that
             /*
             foreach (T component in _components)
             {
@@ -235,7 +234,7 @@ namespace Asteroids2
             */
 
             // trim the array
-            T[] result = new T[count + 1];
+            T[] result = new T[count];
 
             for (int i = 0; i < result.Length; i++)
             {

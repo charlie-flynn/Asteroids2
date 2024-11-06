@@ -22,7 +22,7 @@ namespace Asteroids2
             AddActor(_player);
 
             _player.AddComponent<Component>();
-            _player.GetComponents<>
+            _player.GetComponents<Component>();
 
 
             _gabooey = Actor.Instantiate(new Actor("Gabooey"), null, new Vector2(400, 400), 0, "Gabooey");

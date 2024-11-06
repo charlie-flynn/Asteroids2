@@ -8,7 +8,7 @@ namespace Asteroids2
 {
     internal class TestComponent : Component
     {
-        TestComponent(Actor owner)
+        TestComponent(Actor owner) : base(owner)
         {
             
         }

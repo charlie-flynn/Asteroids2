@@ -29,7 +29,9 @@ namespace Asteroids2
         public override void Start()
         {
             base.Start();
+            LoopAround component = new LoopAround(this);
             Transform.LocalScale = new Vector2(30, 30);
+            AddComponent<LoopAround>(component);
         }
         public override void Update(double deltaTime)
         {
