@@ -22,7 +22,15 @@ namespace Asteroids2
             float distance = Vector2.Distance(collider.Owner.Transform.GlobalPosition, Owner.Transform.GlobalPosition);
             float sumRadii = collider.CollisionRadius + CollisionRadius;
 
-            return sumRadii >= distance;
+            if (sumRadii >= distance)
+            {
+                CollidedActor = collider.Owner;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public override void Draw()

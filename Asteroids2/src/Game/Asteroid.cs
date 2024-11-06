@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Raylib_cs;
 using MathLibrary;
+using System.Security.Cryptography;
 
 namespace Asteroids2
 {
@@ -41,7 +42,12 @@ namespace Asteroids2
 
             // check if a bullet has collided when not invulnerable
             if (_invulnTime <= 0.0f)
-                
+                if (Collider.CheckCollision<Bullet>())
+                {
+                    Destroy(this);
+                    Destroy(Collider.CollidedActor);
+                }
+
 
             Raylib.DrawCircleV(Transform.GlobalPosition, _radius, Color.Blue);
         }
@@ -50,8 +56,8 @@ namespace Asteroids2
         {
             if (_radius >= 20.0f)
             {
-                Instantiate(new Asteroid(_radius / 2, _speed * 1.2f), null, Transform.GlobalPosition, -Transform.GlobalRotationAngle + 45);
-                Instantiate(new Asteroid(_radius / 2, _speed * 1.2f), null, Transform.GlobalPosition, -Transform.GlobalRotationAngle - 45);
+                Instantiate(new Asteroid(_radius / 2, _speed * 1.2f), null, Transform.GlobalPosition + new Vector2(_radius, 0), -Transform.GlobalRotationAngle - 45);
+                Instantiate(new Asteroid(_radius / 2, _speed * 1.2f), null, Transform.GlobalPosition + new Vector2(0, _radius), -Transform.GlobalRotationAngle + 45);
             }
             base.End();
         }

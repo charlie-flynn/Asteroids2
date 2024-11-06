@@ -10,6 +10,7 @@ namespace Asteroids2
     internal class Collider
     {
         public Actor Owner { get; protected set; }
+        public Actor CollidedActor { get; protected set; }
 
         public Collider(Actor owner)
         {
@@ -19,23 +20,27 @@ namespace Asteroids2
         public bool CheckCollision(Actor other)
         {
             if (other.Collider != null && other.Collider is CircleCollider)
+            {
                 return CheckCollisionCircle((CircleCollider)other.Collider);
+            }
+                
 
             return false;
         }
 
-        public Actor CheckCollision<T>() where T : Actor
+        public bool CheckCollision<T>() where T : Actor
         {
             foreach (Actor actor in Game.CurrentScene.Actors)
             {
                 if (actor is T && actor.Collider != null && actor.Collider is CircleCollider)
                     if (CheckCollisionCircle((CircleCollider)actor.Collider))
                     {
-                           return actor;
+                        CollidedActor = actor;
+                        return true;
                     }
             }
 
-            return null;
+            return false;
         }
 
         public virtual bool CheckCollisionCircle(CircleCollider collider)
