@@ -11,10 +11,11 @@ namespace Asteroids2
     internal class Player : Actor
     {
         private float _momentum = 0;
-        private float _acceleration = 0.3f;
-        private float _decceleration = 0.4f;
+        private float _acceleration = 10.0f;
+        private float _decceleration = 12.0f;
         private float _turnSpeed = 150.0f;
         private Color _color = Color.Pink;
+        private float _shootCooldown = 0.0f;
 
         public float Momentum 
         {
@@ -22,7 +23,7 @@ namespace Asteroids2
             
             set
             {
-                _momentum = Math.Clamp((float)value, 0.0f, 750.0f);
+                _momentum = Math.Clamp((float)value, 0.0f, 300.0f);
             }
         }
 
@@ -50,11 +51,14 @@ namespace Asteroids2
                 Transform.Rotate((float)-((Raylib.IsKeyDown(KeyboardKey.A) - Raylib.IsKeyDown(KeyboardKey.D)) * (Math.PI / 180) * _turnSpeed * deltaTime));
 
 
+            if (_shootCooldown > 0.0f)
+                _shootCooldown -= (float)deltaTime;
 
             // shooting code
-            if (Raylib.IsKeyPressed(KeyboardKey.Space))
+            if (Raylib.IsKeyDown(KeyboardKey.Space) && _shootCooldown <= 0.0f)
             {
                 Instantiate(new Bullet(), null, Transform.GlobalPosition, -Transform.GlobalRotationAngle, "Bullet");
+                _shootCooldown = 0.5f;
             }
 
             // drawing

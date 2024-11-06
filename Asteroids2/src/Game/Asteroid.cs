@@ -13,13 +13,11 @@ namespace Asteroids2
     {
         private float _radius;
         private float _speed;
-        private float _invulnTime;
 
         public Asteroid(float radius, float speed)
         {
             _radius = radius;
             _speed = speed;
-            _invulnTime = 1.0f;
             Collider = new CircleCollider(this, _radius);
         }
         public override void Start()
@@ -32,21 +30,15 @@ namespace Asteroids2
         public override void Update(double deltaTime)
         {
             base.Update(deltaTime);
-
-            // reduce the invuln timer on spawning
-            if (_invulnTime > 0.0f)
-                _invulnTime -= (float)deltaTime;
-
             // move a wee bit
             Transform.Translate(Transform.Forward * _speed * (float)deltaTime);
 
             // check if a bullet has collided when not invulnerable
-            if (_invulnTime <= 0.0f)
-                if (Collider.CheckCollision<Bullet>())
-                {
-                    Destroy(this);
-                    Destroy(Collider.CollidedActor);
-                }
+            if (Collider.CheckCollision<Bullet>())
+            {
+                Destroy(this);
+                Destroy(Collider.CollidedActor);
+            }
 
 
             Raylib.DrawCircleV(Transform.GlobalPosition, _radius, Color.Blue);

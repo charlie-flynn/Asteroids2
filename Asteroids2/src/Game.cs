@@ -70,6 +70,7 @@ namespace Asteroids2
             Raylib.InitWindow(800, 800, "Asteroids 2");
 
             // timing stuff
+            Raylib.SetTargetFPS(60);
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
             double deltaTime = 1;

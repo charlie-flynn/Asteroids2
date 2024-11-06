@@ -9,41 +9,61 @@ namespace Asteroids2
     internal class Scene
     {
         private List<Actor> _actors;
+        private List<Actor> _addedActors;
+        private List<Actor> _removedActors;
         public List<Actor> Actors { get => _actors; }
 
         public void AddActor(Actor actor)
         {
             if (!_actors.Contains(actor))
-                 _actors.Add(actor);
+                 _addedActors.Add(actor);
         }
 
         public bool RemoveActor(Actor actor)
         {
-           return _actors.Remove(actor);
+            if (_actors.Contains(actor))
+            {
+                _removedActors.Add(actor);
+                return true;
+            }
+            return false;
+
         }
 
         public virtual void Start()
         {
             _actors = new List<Actor>();
+            _addedActors = new List<Actor>();
+            _removedActors = new List<Actor>();
         }
 
         public virtual void Update(double deltaTime)
         {
-            try
-            {
-                foreach (Actor actor in _actors)
-                {
-                    if (!actor.Started)
-                        actor.Start();
+              foreach (Actor actor in _actors)
+             {
+                if (!actor.Started)
+                    actor.Start();
 
-                    actor.Update(deltaTime);
-                }
-            }
-            catch (Exception exception)
+                actor.Update(deltaTime);
+             }
+
+            foreach (Actor actor in _addedActors)
             {
-                Console.WriteLine(exception);
+                _actors.Add(actor);
             }
             
+            foreach (Actor actor in _removedActors)
+            {
+                _actors.Remove(actor);
+            }
+
+            if (_addedActors.Count > 0)
+                _addedActors.RemoveRange(0, _addedActors.Count);
+
+            if (_removedActors.Count > 0)
+                _removedActors.RemoveRange(0, _removedActors.Count);
+
+
 
             // check for collision
             for (int row = 0; row < _actors.Count; row++)
@@ -67,18 +87,10 @@ namespace Asteroids2
 
         public virtual void End()
         {
-            try
-            {
                 foreach (Actor actor in _actors)
                 {
                     actor.End();
                 }
-            }
-            catch
-            {
-
-            }
-
         }
 
         
