@@ -13,7 +13,7 @@ namespace Asteroids2
         private float _momentum = 0;
         private float _acceleration = 10.0f;
         private float _decceleration = 12.0f;
-        private float _turnSpeed = 150.0f;
+        private float _turnSpeed = 200.0f;
         private Color _color = Color.Pink;
         private float _shootCooldown = 0.0f;
 
@@ -55,7 +55,7 @@ namespace Asteroids2
                 _shootCooldown -= (float)deltaTime;
 
             // shooting code
-            if (Raylib.IsKeyDown(KeyboardKey.Space) && _shootCooldown <= 0.0f)
+            if (Raylib.IsKeyPressed(KeyboardKey.Space) && _shootCooldown <= 0.0f)
             {
                 Instantiate(new Bullet(), null, Transform.GlobalPosition, -Transform.GlobalRotationAngle, "Bullet");
                 _shootCooldown = 0.5f;
@@ -75,8 +75,6 @@ namespace Asteroids2
             (Transform.GlobalPosition,
             Transform.GlobalPosition + (Transform.Forward * Transform.LocalScale.x),
             Color.SkyBlue);
-
-            Raylib.DrawText(Momentum.ToString(), 10, 10, 10, Color.Purple);
         }
 
         public override void OnCollision(Actor other)

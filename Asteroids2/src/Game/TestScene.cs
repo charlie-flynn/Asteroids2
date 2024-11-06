@@ -28,8 +28,6 @@ namespace Asteroids2
         {
             base.Update(deltaTime);
 
-            Raylib.DrawText(Actors.Count.ToString(), 10, 10, 30, Color.Purple);
-
             _player.Collider.Draw();
         }
     }
