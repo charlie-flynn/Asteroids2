@@ -11,8 +11,8 @@ namespace Asteroids2
     internal class Player : Actor
     {
         private float _momentum = 0;
-        private float _acceleration = 0.2f;
-        private float _decceleration = 0.06f;
+        private float _acceleration = 0.3f;
+        private float _decceleration = 0.4f;
         private float _turnSpeed = 150.0f;
         private Color _color = Color.Pink;
 
@@ -29,9 +29,8 @@ namespace Asteroids2
         public override void Start()
         {
             base.Start();
-            LoopAround component = new LoopAround(this);
             Transform.LocalScale = new Vector2(30, 30);
-            AddComponent<LoopAround>(component);
+            AddComponent(new LoopAround(this));
         }
         public override void Update(double deltaTime)
         {
@@ -57,19 +56,6 @@ namespace Asteroids2
             {
                 Instantiate(new Bullet(), null, Transform.GlobalPosition, -Transform.GlobalRotationAngle, "Bullet");
             }
-
-            // looping around the screen code
-            if (Transform.GlobalPosition.x > Raylib.GetScreenWidth() + Transform.GlobalScale.Magnitude * 2)
-                Transform.Translate(-Raylib.GetScreenWidth() - Transform.GlobalScale.Magnitude * 2, 0);
-
-            if (Transform.GlobalPosition.x < 0 - Transform.GlobalScale.Magnitude * 2)
-                Transform.Translate(Raylib.GetScreenWidth() + Transform.GlobalScale.Magnitude * 2, 0);
-
-            if (Transform.GlobalPosition.y > Raylib.GetScreenHeight() + Transform.GlobalScale.Magnitude * 2)
-                Transform.Translate(0, -Raylib.GetScreenHeight() - Transform.GlobalScale.Magnitude * 2);
-
-            if (Transform.GlobalPosition.y < 0 - Transform.GlobalScale.Magnitude * 2)
-                Transform.Translate(0, Raylib.GetScreenHeight() + Transform.GlobalScale.Magnitude * 2);
 
             // drawing
             Raylib.DrawPoly

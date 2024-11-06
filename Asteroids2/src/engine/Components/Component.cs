@@ -12,7 +12,7 @@ namespace Asteroids2
         private bool _started;
         private bool _enabled;
         public bool Started { get => _started; }
-        public Actor Owner { get => _owner; }
+        public Actor Owner { get => _owner; set => _owner = value; }
 
         public Component(Actor owner)
         {
@@ -44,7 +44,10 @@ namespace Asteroids2
         {
             _started = true;
         }
-        public virtual void Update(double deltaTime) { }
+        public virtual void Update(double deltaTime) 
+        {
+
+        }
         public virtual void End() { }
     }
 }

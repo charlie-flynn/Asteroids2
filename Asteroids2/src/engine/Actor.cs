@@ -26,7 +26,7 @@ namespace Asteroids2
             get => _enabled;
             set
             {
-                // If enabled would not changed, do nothing
+                // If enabled would not be changed, do nothing
                 if (_enabled == value) return;
 
                 _enabled = value;
@@ -86,6 +86,8 @@ namespace Asteroids2
             if (actor.Transform.Parent != null)
                 actor.Transform.Parent.RemoveChild(actor.Transform);
 
+            actor.End();
+
             Game.CurrentScene.RemoveActor(actor);
         }
 
@@ -138,11 +140,12 @@ namespace Asteroids2
             return component;
         }
 
-        public T AddComponent<T>() where T : Component
+        public T AddComponent<T>() where T : Component, new()
         {
-            T component = (T)new Component(this);
+            T component = new T();
+            component.Owner = this;
 
-            return AddComponent<T>(component);
+            return AddComponent(component);
         }
 
         // remove component
@@ -181,7 +184,11 @@ namespace Asteroids2
 
 
             if (componentRemoved)
+            {
+                component.End();
                 _components = temp;
+            }
+
 
             return componentRemoved;
         }
@@ -223,15 +230,6 @@ namespace Asteroids2
                 }
 
             }
-
-            // this was a code i was gonna write but i dont think it works like that
-            /*
-            foreach (T component in _components)
-            {
-                temp[count] = component;
-                count++;
-            }
-            */
 
             // trim the array
             T[] result = new T[count];

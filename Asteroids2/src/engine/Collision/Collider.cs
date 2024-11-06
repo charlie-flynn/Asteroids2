@@ -23,7 +23,21 @@ namespace Asteroids2
 
             return false;
         }
-        
+
+        public Actor CheckCollision<T>() where T : Actor
+        {
+            foreach (Actor actor in Game.CurrentScene.Actors)
+            {
+                if (actor is T && actor.Collider != null && actor.Collider is CircleCollider)
+                    if (CheckCollisionCircle((CircleCollider)actor.Collider))
+                    {
+                           return actor;
+                    }
+            }
+
+            return null;
+        }
+
         public virtual bool CheckCollisionCircle(CircleCollider collider)
         {
             return false;

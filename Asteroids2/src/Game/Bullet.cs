@@ -11,23 +11,24 @@ namespace Asteroids2
     internal class Bullet : Actor
     {
 
-        private float _speed = 0.1f;
+        private float _speed = 200.0f;
 
         public override void Start()
         {
             base.Start();
             Transform.LocalScale = new Vector2(10, 30);
+            AddComponent(new DespawnOffScreen(this));
+            Collider = new CircleCollider(this, 5);
         }
         public override void Update(double deltaTime)
         {
             base.Update(deltaTime);
 
-            Transform.Translate(Transform.Forward * _speed);
+            // move the bullet forward
+            Transform.Translate(Transform.Forward * _speed * (float)deltaTime);
 
-            Rectangle rec = new Rectangle(Transform.GlobalPosition, Transform.GlobalScale);
-            Vector2 offset = new Vector2(Transform.GlobalPosition.x / 2, Transform.GlobalPosition.y / 2);
-
-            Raylib.DrawRectanglePro(rec, new Vector2(5, 15), Transform.LocalRotationAngle * (180 / (float)Math.PI) + 90, Color.Red);
+            // draw the bullet
+            Raylib.DrawCircleV(Transform.GlobalPosition, 5, Color.Red);
         }
 
 

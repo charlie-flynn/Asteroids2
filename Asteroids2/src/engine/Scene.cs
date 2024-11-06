@@ -9,6 +9,7 @@ namespace Asteroids2
     internal class Scene
     {
         private List<Actor> _actors;
+        public List<Actor> Actors { get => _actors; }
 
         public void AddActor(Actor actor)
         {
@@ -38,9 +39,9 @@ namespace Asteroids2
                     actor.Update(deltaTime);
                 }
             }
-            catch
+            catch (Exception exception)
             {
-                Console.WriteLine("error!");
+                Console.WriteLine(exception);
             }
             
 
@@ -66,10 +67,18 @@ namespace Asteroids2
 
         public virtual void End()
         {
-            foreach (Actor actor in _actors)
+            try
             {
-                actor.End();
+                foreach (Actor actor in _actors)
+                {
+                    actor.End();
+                }
             }
+            catch
+            {
+
+            }
+
         }
 
         

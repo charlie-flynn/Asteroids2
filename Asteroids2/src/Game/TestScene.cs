@@ -11,8 +11,8 @@ namespace Asteroids2
 {
     internal class TestScene : Scene
     {
-        Actor _gabooey;
         Player _player;
+        Asteroid _astaroid;
         public override void Start()
         {
             base.Start();
@@ -21,13 +21,7 @@ namespace Asteroids2
             _player.Collider = new CircleCollider(_player, 5);
             AddActor(_player);
 
-            _player.AddComponent<Component>();
-            _player.GetComponents<Component>();
-
-
-            _gabooey = Actor.Instantiate(new Actor("Gabooey"), null, new Vector2(400, 400), 0, "Gabooey");
-            _gabooey.Collider = new CircleCollider(_gabooey, 100);
-            AddActor(_gabooey);
+            _astaroid = (Asteroid)Actor.Instantiate(new Asteroid(60, 5), null, new Vector2(200, 200), 0);
         }
 
         public override void Update(double deltaTime)
@@ -35,12 +29,6 @@ namespace Asteroids2
             base.Update(deltaTime);
 
             _player.Collider.Draw();
-            if (_player.Collider.CheckCollision(_gabooey))
-            {
-                Console.WriteLine("HIT");
-            }
-
-            Raylib.DrawCircleV(_gabooey.Transform.GlobalPosition, _gabooey.Transform.GlobalScale.x * 100, Color.Green);
         }
     }
 }
