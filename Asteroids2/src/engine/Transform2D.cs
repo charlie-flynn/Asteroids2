@@ -193,26 +193,23 @@ namespace Asteroids2
         public void UpdateTransforms()
         {
             _localMatrix = _localTranslation * _localRotation * _localScale;
-
-
-            // parent-child relationships
-            // TO DO: fix weird numbers happening with parents
+            
             if (_parent != null)
             {
-                _globalMatrix = _parent._localTranslation * _localMatrix;
+                _globalMatrix = _parent._globalMatrix * _localMatrix;
             }
             else
             {
                 _globalMatrix = _localMatrix;
             }
-
+            
             // update the transforms of every child
             foreach (Transform2D child in _children)
             {
                 child.UpdateTransforms();
             }
         }
-        
+
         public string GlobalMatrixToString()
         {
             return _globalMatrix.ToString();

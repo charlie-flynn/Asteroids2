@@ -67,7 +67,7 @@ namespace Asteroids2
             3,
             Transform.GlobalScale.x,
             -Transform.GlobalRotationAngle * (180 / (float)Math.PI),
-            Color.Pink);
+            _color);
 
             Vector2 offset = new Vector2(Transform.LocalScale.x, Transform.LocalScale.y);
 
@@ -79,7 +79,8 @@ namespace Asteroids2
 
         public override void OnCollision(Actor other)
         {
-            _color = Color.Red;
+            if (other is Asteroid)
+                _color = Color.Red;
         }
     }
 }

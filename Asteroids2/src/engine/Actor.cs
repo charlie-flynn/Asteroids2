@@ -86,6 +86,7 @@ namespace Asteroids2
             if (actor.Transform.Parent != null)
                 actor.Transform.Parent.RemoveChild(actor.Transform);
 
+            // end
             actor.End();
 
             Game.CurrentScene.RemoveActor(actor);

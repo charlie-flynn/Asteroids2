@@ -31,6 +31,7 @@ namespace Asteroids2
         public override void Update(double deltaTime)
         {
             base.Update(deltaTime);
+
             // move a wee bit
             Transform.Translate(Transform.Forward * _speed * (float)deltaTime);
 
@@ -41,13 +42,14 @@ namespace Asteroids2
                 Destroy(Collider.CollidedActor);
             }
 
-
+            // draw
             Raylib.DrawCircleV(Transform.GlobalPosition, _radius, Color.Blue);
         }
 
         public override void End()
         {
-            if (_radius >= 20.0f)
+            // if its bigger than a certain size, create two asteroids 
+            if (_radius > 20.0f)
             {
                 Instantiate(new Asteroid(_radius / 2, _speed * 1.2f), null, Transform.GlobalPosition + new Vector2(_radius, 0), -Transform.GlobalRotationAngle - 45);
                 Instantiate(new Asteroid(_radius / 2, _speed * 1.2f), null, Transform.GlobalPosition + new Vector2(0, _radius), -Transform.GlobalRotationAngle + 45);
