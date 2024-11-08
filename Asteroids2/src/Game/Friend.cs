@@ -19,7 +19,7 @@ namespace Asteroids2
             _isFound = false;
             _component = new LoopAround(this);
             AddComponent(_component);
-            Collider = new CircleCollider(this, 10);
+            Collider = new CircleCollider(this, 20);
         }
 
         public override void Start()
@@ -49,7 +49,6 @@ namespace Asteroids2
 
             // drwaing
             Raylib.DrawPoly(Transform.GlobalPosition, 3, 10, -Transform.GlobalRotationAngle * (180 / (float)Math.PI), Color.Pink);
-            Collider.Draw();
         }
 
         public override void OnCollision(Actor other)
@@ -57,29 +56,31 @@ namespace Asteroids2
             // if collided with player
             if (other is Player && !_isFound)
             {
-                // and said player has less than 9 children, add the friend as a child of the player, set the local position to some weird math, set the rotaiton to 0, disable the looping component
+                // and said player has less than 8 children, add the friend as a child of the player, set the local position to some weird math, set the rotaiton to 0, disable the looping component
                 // aaaaaand set isfound to true
-                if (other.Transform.Children.Length < 9)
+                if (other.Transform.Children.Length < 8)
                 {
                     other.Transform.AddChild(Transform);
 
+                    // this math makes the friends' positions alternate between halves of a semicircle when they are collected
                     if (other.Transform.Children.Length % 2 == 1)
                     {
                         Transform.LocalPosition = new Vector2
                         ((float)Math.Sin(((other.Transform.Children.Length / 2) - 1) * .52f),
-                        (float)Math.Cos(((other.Transform.Children.Length / 2) - 1) * .52f)).Normalized * 1.2f;
+                        (float)Math.Cos(((other.Transform.Children.Length / 2) - 1) * .52f)).Normalized * 1.4f;
                     }
                     else
                     {
                         Transform.LocalPosition = new Vector2
                         ((float)Math.Sin(((other.Transform.Children.Length / 2) + 4) * -.52f),
-                        (float)Math.Cos(((other.Transform.Children.Length / 2) + 4) * -.52f)).Normalized * 1.2f;
+                        (float)Math.Cos(((other.Transform.Children.Length / 2) + 4) * -.52f)).Normalized * 1.4f;
                     }
 
 
                     Transform.LocalRotation = Matrix3.CreateRotation(0);
                     _component.Enabled = false;
                     _isFound = true;
+                    Collider = null;
                 }
                 else
                 {
