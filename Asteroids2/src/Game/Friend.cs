@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using MathLibrary;
@@ -13,11 +14,42 @@ namespace Asteroids2
         private bool _isFound;
         private LoopAround _component;
         private float _shootCooldown;
+        private int _randomDecision;
+        private float _timer;
+        private float _speed;
+        private float _turnSpeed;
+        private float _lifespan;
+
+        private float Lifespan 
+        {
+            get => _lifespan;
+
+            set
+            {
+                _lifespan = value;
+
+                if (_lifespan <= 0.0f)
+                    Destroy(this);
+            }    
+        }
+
+        private enum Decision
+        {
+            FORWARD = 1,
+            FORWARD2 = 2,
+            FORWARD3 = 3,
+            FORWARD4 = 4,
+            TURNLEFT = 5,
+            TURNRIGHT = 6
+        }
 
         public Friend()
         {
             _isFound = false;
             _component = new LoopAround(this);
+            _speed = 200.0f;
+            _turnSpeed = 150.0f;
+            _lifespan = 30.0f;
             AddComponent(_component);
             Collider = new CircleCollider(this, 20);
         }
@@ -31,18 +63,65 @@ namespace Asteroids2
         {
             base.Update(deltaTime);
 
-            // decrease the shoot cooldown if its more than 0
-            if (_shootCooldown > 0.0f)
-                _shootCooldown -= (float)deltaTime;
+
 
             // if it is following the player
             if (_isFound)
             {
+                // decrease the shoot cooldown if its more than 0
+                if (_shootCooldown > 0.0f)
+                    _shootCooldown -= (float)deltaTime;
+
                 // friend can shoot
                 if (Raylib.IsKeyPressed(KeyboardKey.Space) && _shootCooldown <= 0.0f)
                 {
                     Instantiate(new Bullet(), null, Transform.GlobalPosition, -Transform.GlobalRotationAngle, "Bullet");
                     _shootCooldown = 0.5f;
+                }
+            }
+            else
+            {
+                // set the timer and decision if the timer is at 0
+                if (_timer <= 0.0f)
+                {
+                    _randomDecision = RandomNumberGenerator.GetInt32(1, 7);
+
+                    switch ((Decision)_randomDecision)
+                    {
+                        case Decision.FORWARD:
+                            _timer = 4.0f;
+                            break;
+                        case Decision.FORWARD2:
+                            _timer = 3.0f;
+                            break;
+                        case Decision.FORWARD3:
+                            _timer = 2.0f;
+                            break;
+                        case Decision.FORWARD4:
+                            _timer = 1.0f;
+                            break;
+                        case Decision.TURNLEFT:
+                            _timer = 0.33f;
+                            break;
+                        case Decision.TURNRIGHT:
+                            _timer = 0.33f;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                // otherwise, move according to the decision chosen and reduce the timer and lifespan
+                else
+                {
+                    Transform.Translate(Transform.Forward * _speed * (float)deltaTime);
+
+                    if (_randomDecision == 5)
+                        Transform.Rotate(1.0f * ((float)Math.PI / 180) * -_turnSpeed * (float)deltaTime);
+                    else if (_randomDecision == 6)
+                        Transform.Rotate(-1.0f * ((float)Math.PI / 180) * -_turnSpeed * (float)deltaTime);
+
+                    _timer -= (float)deltaTime;
+                    Lifespan -= (float)deltaTime;
                 }
             }
 
@@ -62,7 +141,7 @@ namespace Asteroids2
                 {
                     other.Transform.AddChild(Transform);
 
-                    // this math makes the friends' positions alternate between halves of a semicircle when they are collected
+                    // this math makes the friends' positions alternate between halves of a circle-ish shape when they are collected
                     if (other.Transform.Children.Length % 2 == 1)
                     {
                         Transform.LocalPosition = new Vector2
@@ -82,6 +161,7 @@ namespace Asteroids2
                     _isFound = true;
                     Collider = null;
                 }
+                // otherwise, destroy this guy
                 else
                 {
                     Destroy(this);

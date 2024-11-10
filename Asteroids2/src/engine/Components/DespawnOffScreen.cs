@@ -18,7 +18,7 @@ namespace Asteroids2
         {
             base.Update(deltaTime);
 
-            // if the object is offscreen, destroy it.
+            // if the actor is offscreen, destroy it.
             if
                 (
                 Owner.Transform.GlobalPosition.x > Raylib.GetScreenWidth() + Owner.Transform.GlobalScale.Magnitude * 2 ||

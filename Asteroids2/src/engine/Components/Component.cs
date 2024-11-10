@@ -25,7 +25,7 @@ namespace Asteroids2
             get => _enabled;
             set
             {
-                // If enabled would not changed, do nothing
+                // If enabled would not change, do nothing
                 if (_enabled == value) return;
 
                 _enabled = value;
@@ -46,7 +46,8 @@ namespace Asteroids2
         }
         public virtual void Update(double deltaTime) 
         {
-
+            if (!Enabled || !Started)
+                return;
         }
         public virtual void End() { }
     }

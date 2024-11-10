@@ -54,15 +54,13 @@ namespace Asteroids2
             Actor actor,
             Transform2D parent = null,
             Vector2 position = new Vector2(), 
-            float rotation = 0,
-            string name = "Actor")
+            float rotation = 0)
         {
 
 
             // set actor's transform values
             actor.Transform.LocalPosition = position;
             actor.Transform.Rotate(rotation);
-            actor.Name = name;
             if (parent != null)
                 parent.AddChild(actor.Transform);
 

@@ -18,20 +18,20 @@ namespace Asteroids2
         {
             base.Update(deltaTime);
 
-            // looping around the screen code
+            // if the actor is offscreen, move it to the opposite edge of the screen.
             if (Enabled)
             {
-                if (Owner.Transform.GlobalPosition.x > Raylib.GetScreenWidth() + Owner.Transform.GlobalScale.x * 2)
-                    Owner.Transform.Translate(-Raylib.GetScreenWidth() - Owner.Transform.GlobalScale.Magnitude * 2, 0);
+                if (Owner.Transform.GlobalPosition.x > Raylib.GetScreenWidth() + Owner.Transform.GlobalScale.x)
+                    Owner.Transform.Translate(-Raylib.GetScreenWidth() - Owner.Transform.GlobalScale.Magnitude, 0);
 
-                if (Owner.Transform.GlobalPosition.x < 0 - Owner.Transform.GlobalScale.x * 2)
-                    Owner.Transform.Translate(Raylib.GetScreenWidth() + Owner.Transform.GlobalScale.Magnitude * 2, 0);
+                if (Owner.Transform.GlobalPosition.x < 0 - Owner.Transform.GlobalScale.x)
+                    Owner.Transform.Translate(Raylib.GetScreenWidth() + Owner.Transform.GlobalScale.Magnitude, 0);
 
-                if (Owner.Transform.GlobalPosition.y > Raylib.GetScreenHeight() + Owner.Transform.GlobalScale.y * 2)
-                    Owner.Transform.Translate(0, -Raylib.GetScreenHeight() - Owner.Transform.GlobalScale.Magnitude * 2);
+                if (Owner.Transform.GlobalPosition.y > Raylib.GetScreenHeight() + Owner.Transform.GlobalScale.y)
+                    Owner.Transform.Translate(0, -Raylib.GetScreenHeight() - Owner.Transform.GlobalScale.Magnitude);
 
-                if (Owner.Transform.GlobalPosition.y < 0 - Owner.Transform.GlobalScale.y * 2)
-                    Owner.Transform.Translate(0, Raylib.GetScreenHeight() + Owner.Transform.GlobalScale.Magnitude * 2);
+                if (Owner.Transform.GlobalPosition.y < 0 - Owner.Transform.GlobalScale.y)
+                    Owner.Transform.Translate(0, Raylib.GetScreenHeight() + Owner.Transform.GlobalScale.Magnitude);
             }
 
         }

@@ -26,20 +26,19 @@ namespace Asteroids2
         {
             base.Start();
 
-            _player = (Player)Actor.Instantiate(new Player(), null, new Vector2(50, 50), 0, "Player");
+            _player = (Player)Actor.Instantiate(new Player(), null, new Vector2(50, 50), 0);
             _player.Collider = new CircleCollider(_player, 5);
 
             _astaroid = (Asteroid)Actor.Instantiate(new Asteroid(60, 30), null, new Vector2(200, 200), 0);
 
-            _friend = (Friend)Actor.Instantiate(new Friend(), null, new Vector2(100, 100), 0, "ACTOR");
-            _friend2 = (Friend)Actor.Instantiate(new Friend(), null, new Vector2(120, 100), 0, "ACTOR");
-            _friend3 = (Friend)Actor.Instantiate(new Friend(), null, new Vector2(140, 100), 0, "ACTOR");
-            _friend4 = (Friend)Actor.Instantiate(new Friend(), null, new Vector2(160, 100), 0, "ACTOR");
-            _friend5 = (Friend)Actor.Instantiate(new Friend(), null, new Vector2(180, 100), 0, "ACTOR");
-            _friend6 = (Friend)Actor.Instantiate(new Friend(), null, new Vector2(200, 100), 0, "ACTOR");
-            _friend7 = (Friend)Actor.Instantiate(new Friend(), null, new Vector2(220, 100), 0, "ACTOR");
-            _friend8 = (Friend)Actor.Instantiate(new Friend(), null, new Vector2(240, 100), 0, "ACTOR");
-            _friend9 = (Friend)Actor.Instantiate(new Friend(), null, new Vector2(260, 100), 0, "ACTOR");
+            _friend2 = (Friend)Actor.Instantiate(new Friend(), null, new Vector2(120, 100), 0);
+            _friend3 = (Friend)Actor.Instantiate(new Friend(), null, new Vector2(140, 100), 0);
+            _friend4 = (Friend)Actor.Instantiate(new Friend(), null, new Vector2(160, 100), 0);
+            _friend5 = (Friend)Actor.Instantiate(new Friend(), null, new Vector2(180, 100), 0);
+            _friend6 = (Friend)Actor.Instantiate(new Friend(), null, new Vector2(200, 100), 0);
+            _friend7 = (Friend)Actor.Instantiate(new Friend(), null, new Vector2(220, 100), 0);
+            _friend8 = (Friend)Actor.Instantiate(new Friend(), null, new Vector2(240, 100), 0);
+            _friend9 = (Friend)Actor.Instantiate(new Friend(), null, new Vector2(260, 100), 0);
         }
 
         public override void Update(double deltaTime)
