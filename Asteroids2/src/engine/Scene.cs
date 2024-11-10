@@ -39,27 +39,29 @@ namespace Asteroids2
 
         public virtual void Update(double deltaTime)
         {
-              foreach (Actor actor in _actors)
-             {
+
+            // update every actor
+            foreach (Actor actor in _actors)
+            {
                 if (!actor.Started)
                     actor.Start();
 
                 actor.Update(deltaTime);
-             }
+            }
 
+            // add and remove every actor that should be added or removed
             foreach (Actor actor in _addedActors)
             {
                 _actors.Add(actor);
             }
-            
             foreach (Actor actor in _removedActors)
             {
                 _actors.Remove(actor);
             }
 
+            // clear out the queues for actors that need to be added or removed
             if (_addedActors.Count > 0)
                 _addedActors.RemoveRange(0, _addedActors.Count);
-
             if (_removedActors.Count > 0)
                 _removedActors.RemoveRange(0, _removedActors.Count);
 
@@ -73,7 +75,7 @@ namespace Asteroids2
                     if (row == column)
                         continue;
 
-                    // if both colliders are valid, check collision
+                    // if both colliders are valid, check if they are colliding
                     if (_actors[row].Collider != null && _actors[column].Collider != null)
                         if (_actors[row].Collider.CheckCollision(_actors[column]))
                         {

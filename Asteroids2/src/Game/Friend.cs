@@ -75,12 +75,16 @@ namespace Asteroids2
                 // friend can shoot
                 if (Raylib.IsKeyPressed(KeyboardKey.Space) && _shootCooldown <= 0.0f)
                 {
-                    Instantiate(new Bullet(), null, Transform.GlobalPosition, -Transform.GlobalRotationAngle, "Bullet");
+                    Instantiate(new Bullet(), null, Transform.GlobalPosition, -Transform.GlobalRotationAngle);
                     _shootCooldown = 0.5f;
                 }
             }
+            // if not following the player
             else
             {
+                // always move forward
+                Transform.Translate(Transform.Forward * _speed * (float)deltaTime);
+
                 // set the timer and decision if the timer is at 0
                 if (_timer <= 0.0f)
                 {
@@ -113,8 +117,6 @@ namespace Asteroids2
                 // otherwise, move according to the decision chosen and reduce the timer and lifespan
                 else
                 {
-                    Transform.Translate(Transform.Forward * _speed * (float)deltaTime);
-
                     if (_randomDecision == 5)
                         Transform.Rotate(1.0f * ((float)Math.PI / 180) * -_turnSpeed * (float)deltaTime);
                     else if (_randomDecision == 6)

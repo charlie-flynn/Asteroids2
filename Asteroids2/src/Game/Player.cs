@@ -57,7 +57,7 @@ namespace Asteroids2
             // shooting code
             if (Raylib.IsKeyPressed(KeyboardKey.Space) && _shootCooldown <= 0.0f)
             {
-                Instantiate(new Bullet(), null, Transform.GlobalPosition, -Transform.GlobalRotationAngle, "Bullet");
+                Instantiate(new Bullet(), null, Transform.GlobalPosition, -Transform.GlobalRotationAngle);
                 _shootCooldown = 0.5f;
             }
 
