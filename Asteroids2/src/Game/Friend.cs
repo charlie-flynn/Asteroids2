@@ -38,9 +38,8 @@ namespace Asteroids2
             FORWARD = 1,
             FORWARD2 = 2,
             FORWARD3 = 3,
-            FORWARD4 = 4,
-            TURNLEFT = 5,
-            TURNRIGHT = 6
+            TURNLEFT = 4,
+            TURNRIGHT = 5,
         }
 
         public Friend()
@@ -88,20 +87,17 @@ namespace Asteroids2
                 // set the timer and decision if the timer is at 0
                 if (_timer <= 0.0f)
                 {
-                    _randomDecision = RandomNumberGenerator.GetInt32(1, 7);
+                    _randomDecision = RandomNumberGenerator.GetInt32(1, 6);
 
                     switch ((Decision)_randomDecision)
                     {
                         case Decision.FORWARD:
-                            _timer = 4.0f;
-                            break;
-                        case Decision.FORWARD2:
                             _timer = 3.0f;
                             break;
-                        case Decision.FORWARD3:
+                        case Decision.FORWARD2:
                             _timer = 2.0f;
                             break;
-                        case Decision.FORWARD4:
+                        case Decision.FORWARD3:
                             _timer = 1.0f;
                             break;
                         case Decision.TURNLEFT:
@@ -114,7 +110,7 @@ namespace Asteroids2
                             break;
                     }
                 }
-                // otherwise, move according to the decision chosen and reduce the timer and lifespan
+                // otherwise, turn if the random decision decided to turn and decrease the timer and lifespan
                 else
                 {
                     if (_randomDecision == 5)
@@ -130,6 +126,7 @@ namespace Asteroids2
 
             // drwaing
             Raylib.DrawPoly(Transform.GlobalPosition, 3, 10, -Transform.GlobalRotationAngle * (180 / (float)Math.PI), Color.Pink);
+            Raylib.DrawPolyLines(Transform.GlobalPosition, 3, 10, -Transform.GlobalRotationAngle * (180 / (float)Math.PI), Color.SkyBlue);
         }
 
         public override void OnCollision(Actor other)
@@ -138,7 +135,7 @@ namespace Asteroids2
             if (other is Player && !_isFound)
             {
                 // and said player has less than 8 children, add the friend as a child of the player, set the local position to some weird math, set the rotaiton to 0, disable the looping component
-                // aaaaaand set isfound to true
+                // aaaaaand set _isfound to true. and also disable the looping component cuz its attached to the player now
                 if (other.Transform.Children.Length < 8)
                 {
                     other.Transform.AddChild(Transform);

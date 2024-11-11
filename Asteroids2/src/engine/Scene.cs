@@ -15,12 +15,14 @@ namespace Asteroids2
 
         public void AddActor(Actor actor)
         {
+            // add actor to the add actor queue if it isnt already there
             if (!_actors.Contains(actor))
                  _addedActors.Add(actor);
         }
 
         public bool RemoveActor(Actor actor)
         {
+            // add actor to the remove actor queue if it is there
             if (_actors.Contains(actor))
             {
                 _removedActors.Add(actor);

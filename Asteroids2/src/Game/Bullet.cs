@@ -11,7 +11,7 @@ namespace Asteroids2
     internal class Bullet : Actor
     {
 
-        private float _speed = 200.0f;
+        private float _speed = 300.0f;
 
         public override void Start()
         {

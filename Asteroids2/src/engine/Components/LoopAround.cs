@@ -19,7 +19,7 @@ namespace Asteroids2
             base.Update(deltaTime);
 
             // if the actor is offscreen, move it to the opposite edge of the screen.
-            if (Enabled)
+            if (Enabled && Started)
             {
                 if (Owner.Transform.GlobalPosition.x > Raylib.GetScreenWidth() + Owner.Transform.GlobalScale.x)
                     Owner.Transform.Translate(-Raylib.GetScreenWidth() - Owner.Transform.GlobalScale.Magnitude, 0);

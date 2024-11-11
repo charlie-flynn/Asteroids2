@@ -97,6 +97,7 @@ namespace Asteroids2
             _started = true;
         }
 
+        // start every unstarted component and also update all components
         public virtual void Update(double deltaTime)
         {
             foreach (Component component in _components)

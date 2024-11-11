@@ -46,7 +46,7 @@ namespace Asteroids2
         }
         public virtual void Update(double deltaTime) 
         {
-            if (!Enabled || !Started)
+            if (!Enabled && !Started)
                 return;
         }
         public virtual void End() { }
