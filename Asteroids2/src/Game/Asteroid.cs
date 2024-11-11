@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Raylib_cs;
 using MathLibrary;
-using System.Security.Cryptography;
 
 namespace Asteroids2
 {

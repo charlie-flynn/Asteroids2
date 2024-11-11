@@ -31,6 +31,7 @@ namespace Asteroids2
         {
             base.Start();
             Transform.LocalScale = new Vector2(30, 30);
+            Collider = new CircleCollider(this, 5);
             AddComponent(new LoopAround(this));
         }
         public override void Update(double deltaTime)
