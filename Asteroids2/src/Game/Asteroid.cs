@@ -14,7 +14,6 @@ namespace Asteroids2
         private float _radius;
         private float _speed;
 
-
         public Asteroid(float radius, float speed)
         {
             _radius = radius;
@@ -22,13 +21,9 @@ namespace Asteroids2
             Collider = new CircleCollider(this, _radius);
             Transform.LocalScale += new Vector2(_radius, _radius);
         }
-
-
-
         public override void Start()
         {
             AddComponent(new LoopAround(this));
-            
             base.Start();
         }
 
@@ -46,14 +41,11 @@ namespace Asteroids2
         public override void End()
         {
             // if its bigger than a certain size, create two asteroids 
-            if (_radius > 25.0f)
+            if (_radius > 20.0f)
             {
                 Instantiate(new Asteroid(_radius / 2, _speed * 1.2f), null, Transform.GlobalPosition + new Vector2(_radius, 0), -Transform.GlobalRotationAngle - 45);
                 Instantiate(new Asteroid(_radius / 2, _speed * 1.2f), null, Transform.GlobalPosition + new Vector2(0, _radius), -Transform.GlobalRotationAngle + 45);
             }
-
-            
-            
             base.End();
         }
 

@@ -77,8 +77,8 @@ namespace Asteroids2
             long currentTime = 0;
             long lastTime = 0;
 
-            Scene testScene = new TestScene();
-            AddScene(testScene);
+            Scene gameScene = new GameScene();
+            AddScene(gameScene);
 
             CurrentScene.Start();
 

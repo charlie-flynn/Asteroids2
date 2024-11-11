@@ -21,10 +21,10 @@ namespace Asteroids2
             // if the actor is offscreen, destroy it.
             if
                 (
-                Owner.Transform.GlobalPosition.x > Raylib.GetScreenWidth() + Owner.Transform.GlobalScale.Magnitude * 2 ||
-                Owner.Transform.GlobalPosition.x < 0 - Owner.Transform.GlobalScale.Magnitude * 2 ||
-                Owner.Transform.GlobalPosition.y > Raylib.GetScreenHeight() + Owner.Transform.GlobalScale.Magnitude * 2 ||
-                Owner.Transform.GlobalPosition.y < 0 - Owner.Transform.GlobalScale.Magnitude * 2
+                Owner.Transform.GlobalPosition.x > Raylib.GetScreenWidth() + Owner.Transform.GlobalScale.Magnitude ||
+                Owner.Transform.GlobalPosition.x < 0 - Owner.Transform.GlobalScale.Magnitude ||
+                Owner.Transform.GlobalPosition.y > Raylib.GetScreenHeight() + Owner.Transform.GlobalScale.Magnitude ||
+                Owner.Transform.GlobalPosition.y < 0 - Owner.Transform.GlobalScale.Magnitude
                 )
                 Actor.Destroy(Owner);
 

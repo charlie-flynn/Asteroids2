@@ -12,7 +12,6 @@ namespace Asteroids2
     internal class Friend : Actor
     {
         private bool _isFound;
-        private LoopAround _component;
         private float _shootCooldown;
         private int _randomDecision;
         private float _timer;
@@ -45,16 +44,17 @@ namespace Asteroids2
         public Friend()
         {
             _isFound = false;
-            _component = new LoopAround(this);
             _speed = 200.0f;
             _turnSpeed = 150.0f;
             _lifespan = 30.0f;
-            AddComponent(_component);
+
             Collider = new CircleCollider(this, 20);
         }
 
         public override void Start()
         {
+        LoopAround component = new LoopAround(this);
+        AddComponent(component);
             base.Start();
         }
 
@@ -135,7 +135,7 @@ namespace Asteroids2
             if (other is Player && !_isFound)
             {
                 // and said player has less than 8 children, add the friend as a child of the player, set the local position to some weird math, set the rotaiton to 0, disable the looping component
-                // aaaaaand set _isfound to true. and also disable the looping component cuz its attached to the player now
+                // aaaaaand set _isfound to true. and also remove the looping component cuz its attached to the player now
                 if (other.Transform.Children.Length < 8)
                 {
                     other.Transform.AddChild(Transform);
@@ -156,7 +156,7 @@ namespace Asteroids2
 
 
                     Transform.LocalRotation = Matrix3.CreateRotation(0);
-                    _component.Enabled = false;
+                    RemoveComponent<LoopAround>();
                     _isFound = true;
                     Collider = null;
                 }

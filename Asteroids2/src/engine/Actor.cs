@@ -10,6 +10,8 @@ namespace Asteroids2
 {
     internal class Actor
     {
+        private Component[] _componentsToRemove = new Component[0];
+
         private Transform2D _transform;
         private bool _started = false;
         private bool _enabled = true;
@@ -97,9 +99,9 @@ namespace Asteroids2
             _started = true;
         }
 
-        // start every unstarted component and also update all components
         public virtual void Update(double deltaTime)
         {
+            // Update all components
             foreach (Component component in _components)
             {
                 if (!component.Started)
@@ -107,6 +109,8 @@ namespace Asteroids2
 
                 component.Update(deltaTime);
             }
+
+            RemoveComponentsToBeRemoved();
         }
 
         public virtual void End()
@@ -122,7 +126,7 @@ namespace Asteroids2
         // add component
         public T AddComponent<T>(T component) where T : Component
         {
-            // Creat temporary array one bigger than _components
+            // Create temporary array one bigger than _components
             Component[] temp = new Component[_components.Length + 1];
 
             // copy over everything in _components into temp
@@ -158,39 +162,51 @@ namespace Asteroids2
             // if there is only one component and it is the one we're looking for, remove it
             if (_components.Length == 1 && _components[0] == component)
             {
-                _components = new Component[0];
+                AddComponentToRemove(component);
                 return true;
             }
 
-
-            // create a temporary array to copy everything over and remove the specified component from
-            // then copy it over to the component array if the component was successfully removed
-            Component[] temp = new Component[_components.Length - 1];
-            bool componentRemoved = false;
-            int j = 0;
-
-            for (int i = 0; i < _components.Length; i++)
+            // loop thorugh components
+            foreach (Component comp in _components)
             {
-                if (_components[i] != component)
+                // if the component is what we're removing
+                if (comp == component)
                 {
-                    temp[j] = _components[i];
-                    j++;
-                }
-                else
-                {
-                    componentRemoved = true;
+                    AddComponentToRemove(comp);
+
+                    return true;
                 }
             }
+            return false;
+
+            //// create a temporary array to copy everything over and remove the specified component from
+            //// then copy it over to the component array if the component was successfully removed
+            //Component[] temp = new Component[_components.Length - 1];
+            //bool componentRemoved = false;
+            //int j = 0;
+
+            //for (int i = 0; i < _components.Length; i++)
+            //{
+            //    if (_components[i] != component)
+            //    {
+            //        temp[j] = _components[i];
+            //        j++;
+            //    }
+            //    else
+            //    {
+            //        componentRemoved = true;
+            //    }
+            //}
 
 
-            if (componentRemoved)
-            {
-                component.End();
-                _components = temp;
-            }
+            //if (componentRemoved)
+            //{
+            //    component.End();
+            //    _components = temp;
+            //}
 
 
-            return componentRemoved;
+
         }
 
         public bool RemoveComponent<T>() where T : Component
@@ -240,6 +256,75 @@ namespace Asteroids2
             }
 
             return result;
+        }
+
+        private void AddComponentToRemove(Component component)
+        {
+            // make sure the component isnt already being removed
+            foreach (Component comp in _componentsToRemove)
+            {
+                if (comp == component)
+                    return;
+            }
+
+            // add that component
+            Component[] temp = new Component[_componentsToRemove.Length + 1];
+
+            // copy over everything in _components into temp
+            for (int i = 0; i < _componentsToRemove.Length; i++)
+            {
+                temp[i] = _componentsToRemove[i];
+            }
+
+            // set the last index in temp to the component we wanna remove
+            temp[temp.Length - 1] = component;
+
+            // store temp in _componentsToRemove
+            _componentsToRemove = temp;
+        }
+
+        private void RemoveComponentsToBeRemoved()
+        {
+            if (_componentsToRemove.Length == 0)
+            {
+                return;
+            }
+
+            // create temp array for _components
+            Component[] tempComponents = new Component[_components.Length];
+
+            // deep copy the array, removing the elements in components to remove
+            int j = 0;
+            for (int i = 0; i < _components.Length; i++)
+            {
+                bool removed = false;
+                foreach (Component component in _componentsToRemove)
+                {
+                    if (_components[i] == component)
+                    {
+                        removed = true;
+                        component.End();
+                        break;
+                    }
+                }
+
+                if (!removed)
+                {
+                    tempComponents[j] = _components[i];
+                    j++;
+                }
+            }
+
+            // trim the array
+            Component[] result = new Component[_components.Length - _componentsToRemove.Length];
+            for (int i = 0; i < result.Length; i++)
+            {
+                result[i] = tempComponents[i];
+            }
+
+            // set the array, clear out _componentsToRemove[] and go home
+            _components = result;
+            _componentsToRemove = new Component[0];
         }
     }
 }
