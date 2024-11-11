@@ -285,10 +285,8 @@ namespace Asteroids2
 
         private void RemoveComponentsToBeRemoved()
         {
-            if (_componentsToRemove.Length == 0)
-            {
+            if (_componentsToRemove.Length <= 0)
                 return;
-            }
 
             // create temp array for _components
             Component[] tempComponents = new Component[_components.Length];

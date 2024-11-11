@@ -18,6 +18,8 @@ namespace Asteroids2
         {
             base.Start();
 
+            Asteroid.onDeath += OnAsteroidKill;
+
             Actor.Instantiate(new Player(), null, new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2));
         }
         public override void Update(double deltaTime)
@@ -27,17 +29,22 @@ namespace Asteroids2
             if (_spawnTimer <= 0.0)
             {
                 Actor.Instantiate(new Asteroid(50, 10), null, new Vector2(), 0);
-                _spawnTimer = 20.0 - _difficultyModifier;
+                _spawnTimer = 20.0 - (_difficultyModifier * 2);
 
-                if (_spawnTimer < 5)
-                    _spawnTimer = 5;
+                if (_spawnTimer < 5.0)
+                    _spawnTimer = 5.0;
             }
 
-            _difficultyModifier = (int)_score / 5000;
+            _difficultyModifier = (int)_score / 10000;
 
             _spawnTimer -= deltaTime;
 
             Raylib.DrawText(_score.ToString(), 10, 10, 20, Color.Red);
+        }
+
+        private void OnAsteroidKill(float radius)
+        {
+            _score += (int)(radius * 100);
         }
     }
 }

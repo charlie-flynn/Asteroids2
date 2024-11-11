@@ -10,6 +10,9 @@ namespace Asteroids2
 {
     internal class Asteroid : Actor
     {
+        public delegate void TOnDeath(float radius);
+        public delegate void TOnSpawn(Asteroid asteroid);
+        public static TOnDeath onDeath;
         private float _radius;
         private float _speed;
 
@@ -39,12 +42,14 @@ namespace Asteroids2
 
         public override void End()
         {
-            // if its bigger than a certain size, create two asteroids 
+            // if the asteroid bigger than a certain size, create two asteroids 
             if (_radius > 20.0f)
             {
                 Instantiate(new Asteroid(_radius / 2, _speed * 1.2f), null, Transform.GlobalPosition + new Vector2(_radius, 0), -Transform.GlobalRotationAngle - 45);
                 Instantiate(new Asteroid(_radius / 2, _speed * 1.2f), null, Transform.GlobalPosition + new Vector2(0, _radius), -Transform.GlobalRotationAngle + 45);
             }
+
+            onDeath(_radius);
             base.End();
         }
 
