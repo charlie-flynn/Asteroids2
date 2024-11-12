@@ -46,7 +46,7 @@ namespace Asteroids2
 
             if (lastAsteroidSpawnDirection != null)
                 Raylib.DrawLineV(new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2), new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2) + lastAsteroidSpawnDirection * 50, Color.Blue);
-                Raylib.DrawLineV(new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2), new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2) + new Vector2(1, 0) * 50, Color.Blue);
+                Raylib.DrawLineV(new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2), new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2) + new Vector2(0, -1) * 50, Color.Blue);
         }
 
         private void OnAsteroidKill(float radius)
@@ -84,11 +84,11 @@ namespace Asteroids2
                 Vector2 spawnToCenterDirection = ((center - randomPosition) * -1).Normalized;
                 Console.WriteLine(rng.ToString());
                 lastAsteroidSpawnDirection = spawnToCenterDirection;
+                    
 
                 // spawn the asteroid
                 // TO DO: actually make it go towards the center kinda
-                Actor.Instantiate(new Asteroid(50, 15), null, randomPosition, -spawnToCenterDirection.Angle(new Vector2(1, 0)) * (180 / (float)Math.PI));
-                Console.WriteLine((spawnToCenterDirection.Angle(new Vector2(1, 0)) * (180 / (float)Math.PI)).ToString());
+                Actor.Instantiate(new Asteroid(50, 15), null, randomPosition, (spawnToCenterDirection.Angle(new Vector2(0, -1)) * (180 / (float)Math.PI)) - 90);
 
                 rng = RandomNumberGenerator.GetInt32(1, 21);
                 if (rng == 1)
