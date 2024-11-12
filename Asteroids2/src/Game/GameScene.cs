@@ -14,6 +14,7 @@ namespace Asteroids2
         private double _score = 0;
         private int _difficultyModifier = 0;
         private double _spawnTimer = 0.0;
+        private Vector2 lastAsteroidSpawnDirection;
 
         public override void Start()
         {
