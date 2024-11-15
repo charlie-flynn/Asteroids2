@@ -1,29 +1,4 @@
-<!-- whhy are comments like this this sucks -->
-
-anyways
-
-___
-
-what the hell is that thang up ther ^
-
-==WHY AM I YELLOW !? !? !? !? ! ?!? !? !?? :interrobang:==
-
-```c#
-Console.WriteLine("Hlelo worlb");
-// that code says hello world in the console. awesome !
-
-Console.WriteLine("im gonna getcha! im gonna getcha! >:D");
-// hey woah waoh waoh waoh woah slow down there bsuter
-```
-| table arc | table arc
-| :-- | --: |
-| an item | another item |
-| yeagh u can just go forever bay bee | hellyeagh :hammer_and_pick:|
-
-
-
-
- # Table of Contents
+# Table of Contents
  - [Vector2 Class](#vector-2)
  - [Vector3 Class](#vector-3)
  - [Vector4 Class](#vector-4)
@@ -31,7 +6,7 @@ Console.WriteLine("im gonna getcha! im gonna getcha! >:D");
  - [Matrix4 Class](#matrix-4)
  ---
 
- # Vector2 {#vector-2}
+ # Vector2 Class {#vector-2}
 
  ## Constructor
  |                Name               |                 Description                 |
@@ -75,7 +50,7 @@ Console.WriteLine("im gonna getcha! im gonna getcha! >:D");
 
 ---
 
- # Vector3 {#vector-3}
+ # Vector3 Class {#vector-3}
 
  ## Constructor
  |                Name               |                 Description                 |
@@ -123,7 +98,7 @@ Console.WriteLine("im gonna getcha! im gonna getcha! >:D");
 
  ---
 
- # Vector4 {#vector-4}
+ # Vector4 Class {#vector-4}
 
  ## Constructor
   |                Name               |                 Description                                          |
@@ -141,8 +116,8 @@ Console.WriteLine("im gonna getcha! im gonna getcha! >:D");
 |------------------------------------|--------------------------------------------------------------------------------|
 | Normalize()                        | Makes the vector normalized, then returns the vector.                          |
 | ToString()                         | Returns the vector converted to a string.                                      |
-| CrossProduct(Vector4 other)        | Returns the cross product of the current vector and one other vector, ignoring the w axis.          |
-| CrossProduct(Vector4 a, Vector4 b) | Returns the cross product of two different vectors, ignoring the w axis.                           |
+| CrossProduct(Vector4 other)        | Returns the cross product of the current vector and one other vector, ignoring the w axis.|
+| CrossProduct(Vector4 a, Vector4 b) | Returns the cross product of two different vectors, ignoring the w axis.       |
 | DotProduct(Vector4 other)          | Returns the dot product of the current vector and one other vector.            |
 | DotProduct(Vector4 a, Vector4 b)   | Returns the dot product of two vectors.                                        |
 | Distance(Vector4 other)            | Returns the distance between the current point and one other point as a float. |
@@ -169,26 +144,69 @@ Console.WriteLine("im gonna getcha! im gonna getcha! >:D");
 
  (table of functions)
 
- # Matrix3 {#matrix-3}
+ # Matrix3 Class {#matrix-3}
 
  ## Constructor
- | Name                                                                                                                 | Description                                  |
+| Name                                                                                                                 | Description                                  |
 |----------------------------------------------------------------------------------------------------------------------|----------------------------------------------|
 | Matrix3(<br>float m00, float m01, float m02,<br>float m10, float m11, float m12,<br>float m20, float m21, float m22) | Creates a Matrix3 with the specified values. |
 
  ## Properties
+| Name        | Description                                                 |
+|-------------|-------------------------------------------------------------|
+| Identity    | Returns the Identity Matrix.                                |
+| this[int i] | Returns the specified index as if the matrix were an array. |
 
  ## Functions
+| Name                                | Description                                         |
+|-------------------------------------|-----------------------------------------------------|
+| ToString()                          | Returns the matrix converted into a string.         |
+| CreateTranslation(float x, float y) | Returns a translation matrix with the given values. |
+| CreateRotation(float radians)       | Returns a rotation matrix using the given value.    |
+| CreateScale(float x, float y)       | Returns a scale matrix with the given values.       |
+| Transpose()                         | Transposes the matrix, rotating it diagonally.      |
 
  ## Operators
+| Name                    | Description                                                                  |
+|-------------------------|------------------------------------------------------------------------------|
+| +(Matrix3 a, Matrix3 b) | Adds all of the contents of the given matrices together.                     |
+| -(Matrix3 a, Matrix3 b) | Subtracts the contents of the matrix on the left by the matrix on the right. |
+| *(Matrix3 a, Matrix3 b) | Multiplies two matrices together.[^1]                                        |
+| *(Matrix3 a, Vector3 b) | Multiplies a matrix by a Vector3.                                            |
 
- (table of functions)[^1]
+---
 
- # Matrix4 {#matrix-4}
+ # Matrix4 Class {#matrix-4}
 
- (table of functions)
+ ## Constructor
+| Name                                                                                                                                                                                                | Description                                  |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------|
+| Matrix4(<br>float m00, float m01, float m02, float m03,<br>float m10, float m11, float m12, float m13,<br>float m20, float m21, float m22, float m23<br>float m30, float m31, float m32, float m33) | Creates a Matrix4 with the specified values. |
 
- [^1]: look at how i did the multiplication code for the matrices im so cool
+ ## Properties
+| Name        | Description                                                 |
+|-------------|-------------------------------------------------------------|
+| Identity    | Returns the Identity Matrix.                                |
+| this[int i] | Returns the specified index as if the matrix were an array. |
+
+ ## Functions
+| Name                           | Description                                    |
+|--------------------------------|------------------------------------------------|
+| ToString()                     | Returns the matrix converted into a string.    |
+| CreateRotationX(float radians) | Returns a rotation matrix for the X axis.      |
+| CreateRotationY(float radians) | Returns a rotation matrix for the Y axis.      |
+| CreateRotationZ(float radians) | Returns a rotation matrix for the Z axis.      |
+| Transpose()                    | Transposes the matrix, rotating it diagonally. |
+
+ ## Operators
+| Name                    | Description                                                                  |
+|-------------------------|------------------------------------------------------------------------------|
+| +(Matrix4 a, Matrix4 b) | Adds all of the contents of the given matrices together.                     |
+| -(Matrix4 a, Matrix4 b) | Subtracts the contents of the matrix on the left by the matrix on the right. |
+| *(Matrix4 a, Matrix4 b) | Multiplies two matrices together.                                            |
+| *(Matrix4 a, Vector3 b) | Multiplies a matrix by a Vector3.                                            |
+
+ [^1]: look at how i did the multiplication code for the matrices i'm really proud of it &#931;:3
     ```c#
                 public static Matrix3 operator *(Matrix3 a, Matrix3 b)
                 {
