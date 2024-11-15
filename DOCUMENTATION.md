@@ -46,7 +46,7 @@
 |                   Name                  |                                 Description                                 |
 |:---------------------------------------:|:---------------------------------------------------------------------------:|
 | Vector2(System.Numerics.Vector2 vector) | Implicit conversion from System.Numeric's Vector2 to MathLibrary's Vector2. |
-| System.Numerics.Vector2(Vector2 vector) | Implicit conversion from MathLibrary's Vector2 to System.Numeric's Vector2  |
+| System.Numerics.Vector2(Vector2 vector) | Implicit conversion from MathLibrary's Vector2 to System.Numeric's Vector2.  |
 
 ---
 
@@ -92,7 +92,7 @@
 |                   Name                  |                                 Description                                 |
 |:---------------------------------------:|:---------------------------------------------------------------------------:|
 | Vector3(System.Numerics.Vector3 vector) | Implicit conversion from System.Numeric's Vector3 to MathLibrary's Vector3. |
-| System.Numerics.Vector3(Vector3 vector) | Implicit conversion from MathLibrary's Vector3 to System.Numeric's Vector3  |
+| System.Numerics.Vector3(Vector3 vector) | Implicit conversion from MathLibrary's Vector3 to System.Numeric's Vector3.  |
 
  (table of functions) 
 
@@ -140,7 +140,7 @@
 |                   Name                  |                                 Description                                 |
 |:---------------------------------------:|:---------------------------------------------------------------------------:|
 | Vector4(System.Numerics.Vector4 vector) | Implicit conversion from System.Numeric's Vector4 to MathLibrary's Vector4. |
-| System.Numerics.Vector4(Vector4 vector) | Implicit conversion from MathLibrary's Vector4 to System.Numeric's Vector4  |
+| System.Numerics.Vector4(Vector4 vector) | Implicit conversion from MathLibrary's Vector4 to System.Numeric's Vector4.  |
 
  (table of functions)
 
