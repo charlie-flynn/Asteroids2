@@ -61,6 +61,7 @@ namespace Asteroids2
             {
                 int rng = RandomNumberGenerator.GetInt32(1, 101);
                 Vector2 randomPosition;
+                float spawnAngle;
 
                 // decide which side to put the asteroid on
                 if (rng <= 25)
@@ -79,22 +80,29 @@ namespace Asteroids2
                 {
                     randomPosition = new Vector2(Raylib.GetScreenWidth() / (((rng + .0001f) % 25) / 4), Raylib.GetScreenHeight());
                 }
-
+                if (rng % 25 == 0)
+                {
+                    randomPosition = new Vector2(Raylib.GetScreenWidth(), Raylib.GetScreenHeight() / 2);
+                }
                 Vector2 center = new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2);
                 Vector2 spawnToCenterDirection = (randomPosition - center).Normalized;
 
-                Console.WriteLine(rng.ToString());
                 lastAsteroidSpawnDirection = spawnToCenterDirection;
-                    
+
+                if (randomPosition.y < Raylib.GetScreenHeight() / 2)
+                    spawnAngle = Vector2.Angle(new Vector2(1, 0), spawnToCenterDirection * -1);
+                else
+                    spawnAngle = Vector2.Angle(new Vector2(1, 0), spawnToCenterDirection) + (float)Math.PI;
 
                 // spawn the asteroid
                 // TO DO: actually make it go towards the center kinda
-                Actor.Instantiate(new Asteroid(50, 15), null, randomPosition, spawnToCenterDirection.Angle(new Vector2(1, 0)));
+                // i just need to make it go the opposite direction that its goin
+                Actor.Instantiate(new Asteroid(50, 15), null, randomPosition, spawnAngle);
 
                 rng = RandomNumberGenerator.GetInt32(1, 21);
                 if (rng == 1)
                 {
-                    Actor.Instantiate(new Friend(), null, randomPosition, 0);
+                    Actor.Instantiate(new Friend(), null, randomPosition, spawnAngle);
                 }
             }
 
