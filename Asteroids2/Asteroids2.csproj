@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="obj\**" />
+    <EmbeddedResource Remove="obj\**" />
+    <None Remove="obj\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Raylib-cs" Version="6.1.1" />
   </ItemGroup>
 
@@ -15,6 +21,10 @@
     <Reference Include="MathLibrary">
       <HintPath>lib\MathLibrary.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="dat\" />
   </ItemGroup>
 
 </Project>

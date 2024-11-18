@@ -16,7 +16,6 @@ namespace Asteroids2
         private int _difficultyModifier = 0;
         private int _lives = 1;
         private double _spawnTimer = 0.0;
-        private Vector2 lastAsteroidSpawnDirection;
 
         public override void Start()
         {
@@ -37,7 +36,7 @@ namespace Asteroids2
             {
                 SpawnStuff(5 + _difficultyModifier);
 
-                _spawnTimer = 5 - (_difficultyModifier * 2);
+                _spawnTimer = 25 - (_difficultyModifier * 2);
 
                 if (_spawnTimer < 5.0)
                     _spawnTimer = 5.0;
@@ -48,10 +47,6 @@ namespace Asteroids2
             _spawnTimer -= deltaTime;
 
             Raylib.DrawText(_score.ToString() + "\n" + _lives.ToString(), 10, 10, 20, Color.Red);
-
-            if (lastAsteroidSpawnDirection != null)
-                Raylib.DrawLineV(new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2), new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2) + lastAsteroidSpawnDirection * 50, Color.Blue);
-                Raylib.DrawLineV(new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2), new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2) + new Vector2(1, 0) * 50, Color.Blue);
         }
 
         private void OnAsteroidKill(float radius)
@@ -104,8 +99,6 @@ namespace Asteroids2
                 }
                 Vector2 center = new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2);
                 Vector2 spawnToCenterDirection = (randomPosition - center).Normalized;
-
-                lastAsteroidSpawnDirection = spawnToCenterDirection;
 
                 // if the asteroid is higher up on the screen than the center, set the spawnAngle equal to that angle which happens to work
                 // otherwise, set it equal to that other angle which works when its below the center
