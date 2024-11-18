@@ -37,8 +37,12 @@ namespace Asteroids2
         {
             bool sceneAdded = false;
 
-            if (_scenes.Contains(scene))
+            if (!_scenes.Contains(scene))
+            {
                 _scenes.Add(scene);
+                sceneAdded = true;
+            }
+
 
             if (_currentScene == null)
                 CurrentScene = scene;

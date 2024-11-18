@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Raylib_cs;
 using MathLibrary;
 using System.Security.Cryptography;
+using Asteroids2.src.Game;
 
 namespace Asteroids2
 {
@@ -13,7 +14,7 @@ namespace Asteroids2
     {
         private double _score = 0;
         private int _difficultyModifier = 0;
-        private int _lives = 3;
+        private int _lives = 1;
         private double _spawnTimer = 0.0;
         private Vector2 lastAsteroidSpawnDirection;
 
@@ -25,6 +26,7 @@ namespace Asteroids2
             Asteroid.onDeath += OnAsteroidKill;
             Player.onDeath += OnPlayerDeath;
 
+            // create a player
             Actor.Instantiate(new Player(), null, new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2));
         }
         public override void Update(double deltaTime)
@@ -33,7 +35,7 @@ namespace Asteroids2
 
             if (_spawnTimer <= 0.0)
             {
-                SpawnStuff(1);
+                SpawnStuff(5 + _difficultyModifier);
 
                 _spawnTimer = 5 - (_difficultyModifier * 2);
 
@@ -41,7 +43,7 @@ namespace Asteroids2
                     _spawnTimer = 5.0;
             }
 
-            _difficultyModifier = (int)_score / 50000;
+            _difficultyModifier = (int)_score / 250000;
 
             _spawnTimer -= deltaTime;
 
@@ -62,7 +64,7 @@ namespace Asteroids2
             _lives--;
             if (_lives <= 0)
             {
-                End();
+                Game.CurrentScene = new ScoreScene(_score);
             }
         }
 

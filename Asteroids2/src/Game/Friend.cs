@@ -72,7 +72,7 @@ namespace Asteroids2
                     _shootCooldown -= (float)deltaTime;
 
                 // friend can shoot
-                if (Raylib.IsKeyPressed(KeyboardKey.Space) && _shootCooldown <= 0.0f)
+                if (Raylib.IsKeyDown(KeyboardKey.Space) && _shootCooldown <= 0.0f)
                 {
                     Instantiate(new Bullet(), null, Transform.GlobalPosition, -Transform.GlobalRotationAngle);
                     _shootCooldown = 0.5f;
