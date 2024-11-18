@@ -23,6 +23,7 @@ namespace Asteroids2
             // add the functions to the necessary delegates
             Asteroid.onDeath += OnAsteroidKill;
             Player.onDeath += OnPlayerDeath;
+            Friend.onCollectWithMaxFriends += OnFriendCollectWithMaxFriends;
 
             // create a player
             Actor.Instantiate(new Player(), null, new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2));
@@ -60,6 +61,11 @@ namespace Asteroids2
             {
                 Game.CurrentScene = new ScoreScene(_score);
             }
+        }
+
+        private void OnFriendCollectWithMaxFriends()
+        {
+            _score += 500000;
         }
 
         private void SpawnStuff(int amount)

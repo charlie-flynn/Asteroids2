@@ -19,6 +19,7 @@ namespace Asteroids2
         private bool _isScoreHigh;
         private int _scorePlace;
         private int _screenProgress = 0;
+        private bool _errorOccured;
         private Vector2 screenDimensions = new Vector2(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
 
         public ScoreScene(double score)
@@ -64,8 +65,16 @@ namespace Asteroids2
             {
                 for (int i = 0; i < _scoreboardNames.Length; i++)
                 {
-                    _scoreboardScores[i] = double.Parse(reader.ReadLine());
-                    _scoreboardNames[i] = reader.ReadLine();
+                    try
+                    {
+                        _scoreboardScores[i] = double.Parse(reader.ReadLine());
+                        _scoreboardNames[i] = reader.ReadLine();
+                    }
+                    catch (Exception e)
+                    {
+                        _errorOccured = true;
+                        Console.WriteLine(e);
+                    }
                 }
             }
 
@@ -203,15 +212,24 @@ namespace Asteroids2
             int yOffset = 120;
 
             // draw all of the scores on the scoreboard
-            for (int i = 0; i < _scoreboardScores.Length; i++)
+            if (!_errorOccured)
             {
-                Raylib.DrawTextPro(new Font(), "#" + (i + 1) + ": " + _scoreboardScores[i],
-                    new Vector2(screenDimensions.x / 2 - screenDimensions.x / 3, yOffset), new Vector2(screenDimensions.x / 10, 0), 0, 30, 1, Color.Green);
-                Raylib.DrawTextPro(new Font(), _scoreboardNames[i],
-                    new Vector2(screenDimensions.x / 2 + screenDimensions.x / 3, yOffset), new Vector2(screenDimensions.x / 10, 0), 0, 30, 1, Color.Green);
+                for (int i = 0; i < _scoreboardScores.Length; i++)
+                {
+                    Raylib.DrawTextPro(new Font(), "#" + (i + 1) + ": " + _scoreboardScores[i],
+                        new Vector2(screenDimensions.x / 2 - screenDimensions.x / 3, yOffset), new Vector2(screenDimensions.x / 10, 0), 0, 30, 1, Color.Green);
+                    Raylib.DrawTextPro(new Font(), _scoreboardNames[i],
+                        new Vector2(screenDimensions.x / 2 + screenDimensions.x / 3, yOffset), new Vector2(screenDimensions.x / 10, 0), 0, 30, 1, Color.Green);
 
-                yOffset += 30;
+                    yOffset += 30;
+                }
             }
+            else
+            {
+                Raylib.DrawTextPro(new Font(), "Scoreboard Error. \n\nPress F3 on the title screen to clear the scoreboard",
+                    new Vector2(screenDimensions.x / 2 + screenDimensions.x / 3, yOffset), new Vector2(screenDimensions.x / 1.2f, 0), 0, 30, 1, Color.Red);
+            }
+
             Raylib.DrawTextPro(new Font(), "Press Enter to return to title",
              new Vector2(screenDimensions.x / 2, screenDimensions.y - screenDimensions.y / 8), new Vector2(screenDimensions.x / 4, 0), 0, 30, 1, Color.Green);
 
@@ -221,14 +239,23 @@ namespace Asteroids2
 
         private void SerializeScoreboard()
         {
-            using (StreamWriter writer = new StreamWriter(@"dat\scoreboard.dat"))
+            try
             {
-                for (int i = 0; i < _scoreboardScores.Length; i++)
+                using (StreamWriter writer = new StreamWriter(@"dat\scoreboard.dat"))
                 {
-                    writer.WriteLine(_scoreboardScores[i]);
-                    writer.WriteLine(_scoreboardNames[i]);
+                    for (int i = 0; i < _scoreboardScores.Length; i++)
+                    {
+                        writer.WriteLine(_scoreboardScores[i]);
+                        writer.WriteLine(_scoreboardNames[i]);
+                    }
                 }
             }
+            catch (Exception e)
+            {
+                _errorOccured = true;
+                Console.WriteLine(e);
+            }
+
 
         }
     }

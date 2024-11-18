@@ -11,6 +11,8 @@ namespace Asteroids2
 {
     internal class Friend : Actor
     {
+        public delegate void TOnCollectWithMaxFriends();
+        public static TOnCollectWithMaxFriends onCollectWithMaxFriends;
         private bool _isFound;
         private float _shootCooldown;
         private int _randomDecision;
