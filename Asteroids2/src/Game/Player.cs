@@ -10,12 +10,18 @@ namespace Asteroids2
 {
     internal class Player : Actor
     {
+        public delegate void TOnDeath();
+        public static TOnDeath onDeath;
         private float _momentum = 0;
         private float _acceleration = 10.0f;
         private float _decceleration = 12.0f;
         private float _turnSpeed = 200.0f;
         private Color _color = Color.Pink;
         private float _shootCooldown = 0.0f;
+        private bool _isDead = false;
+        private double _respawnTimer;
+        private bool _isInvincible;
+        private double _invincibleTimer;
 
         public float Momentum 
         {
@@ -30,6 +36,7 @@ namespace Asteroids2
         public override void Start()
         {
             base.Start();
+            onDeath += Die;
             Transform.LocalScale = new Vector2(30, 30);
             Collider = new CircleCollider(this, 5);
             AddComponent(new LoopAround(this));
@@ -38,6 +45,27 @@ namespace Asteroids2
         {
             base.Update(deltaTime);
 
+            // if you are dead, reduce the respawn timer by deltatime, and if the respawntimer is done, respawn
+            if (_isDead)
+            {
+                _respawnTimer -= deltaTime;
+                if (_respawnTimer <= 0.0)
+                {
+                    Respawn();
+                }    
+            }
+
+            // invincible co
+            if (_isInvincible)
+            {
+                _color = Color.Blue;
+                _invincibleTimer -= deltaTime;
+                if (_invincibleTimer <= 0.0)
+                {
+                    _isInvincible = false;
+                    _color = Color.Pink;
+                }
+            }
 
             // movement code
             if (Raylib.IsKeyDown(KeyboardKey.W))
@@ -80,8 +108,29 @@ namespace Asteroids2
 
         public override void OnCollision(Actor other)
         {
-            if (other is Asteroid)
-                _color = Color.Red;
+            if (other is Asteroid && !_isInvincible)
+                onDeath();
+        }
+
+        private void Die()
+        {
+            Transform.LocalPosition = new Vector2(10000000, 10000000);
+            _isDead = true;
+            _respawnTimer = 2.0;
+
+            foreach (Transform2D child in Transform.Children)
+            {
+                Destroy(child.Owner);
+            }
+        }
+
+        private void Respawn()
+        {
+            _isDead = false;
+            _isInvincible = true;
+            _invincibleTimer = 3.0;
+            Transform.LocalPosition = new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2);
+            Transform.LocalRotation = Matrix3.Identity;
         }
     }
 }

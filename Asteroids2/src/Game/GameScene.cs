@@ -21,6 +21,7 @@ namespace Asteroids2
             base.Start();
 
             Asteroid.onDeath += OnAsteroidKill;
+            Player.onDeath += OnPlayerDeath;
 
             Actor.Instantiate(new Player(), null, new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2));
         }
@@ -54,16 +55,25 @@ namespace Asteroids2
             _score += (int)(radius * 100);
         }
 
+        private void OnPlayerDeath()
+        {
+
+        }
+
         private void SpawnStuff(int amount)
         {
             // spawn all of the asteroids
             for (int i = 0; i < amount; i++)
             {
+                // generate random position and angle variance
                 int rng = RandomNumberGenerator.GetInt32(1, 101);
+                float angleVariance = RandomNumberGenerator.GetInt32(-45, 46) * ((float)Math.PI / 180);
+
+                // declare the position and angle
                 Vector2 randomPosition;
                 float spawnAngle;
 
-                // decide which side to put the asteroid on
+                // decide where to place the asteroid based on the rng
                 if (rng <= 25)
                 {
                     randomPosition = new Vector2(0, Raylib.GetScreenHeight() / (((rng + .0001f) % 25) / 4));
@@ -89,15 +99,15 @@ namespace Asteroids2
 
                 lastAsteroidSpawnDirection = spawnToCenterDirection;
 
-                if (randomPosition.y < Raylib.GetScreenHeight() / 2)
+                // if the asteroid is higher up on the screen than the center, set the spawnAngle equal to that angle which happens to work
+                // otherwise, set it equal to that other angle which works when its below the center
+                if (randomPosition.y < center.y)
                     spawnAngle = Vector2.Angle(new Vector2(1, 0), spawnToCenterDirection * -1);
                 else
                     spawnAngle = Vector2.Angle(new Vector2(1, 0), spawnToCenterDirection) + (float)Math.PI;
 
-                // spawn the asteroid
-                // TO DO: actually make it go towards the center kinda
-                // i just need to make it go the opposite direction that its goin
-                Actor.Instantiate(new Asteroid(50, 15), null, randomPosition, spawnAngle);
+                // spawn the asteroid, using the randomPosition as the position and the sum of spawnAngle and angleVariance
+                Actor.Instantiate(new Asteroid(50, 15), null, randomPosition, spawnAngle + angleVariance);
 
                 rng = RandomNumberGenerator.GetInt32(1, 21);
                 if (rng == 1)
