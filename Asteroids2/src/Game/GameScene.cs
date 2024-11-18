@@ -11,17 +11,16 @@ namespace Asteroids2
 {
     internal class GameScene : Scene
     {
-        private double _score = 0;
-        private int _difficultyModifier = 0;
-        private int _lives = 1;
-        private double _spawnTimer = 0.0;
-        public double Score { get => _score; }
+        private double _score;
+        private int _difficultyModifier;
+        private int _lives;
+        private double _spawnTimer;
 
         public GameScene()
         {
             _score = 0;
             _difficultyModifier = 0;
-            _lives = 2;
+            _lives = 3;
             _spawnTimer = 0.0;
         }
 
@@ -31,9 +30,9 @@ namespace Asteroids2
 
             // add functions to the necessary delegates if theyre not already there
             // TO DO: make it not add the same function more than once
-            Asteroid.onDeath += OnAsteroidKill;
-            Player.onDeath += OnPlayerDeath;
-            Friend.onCollectWithMaxFriends += OnFriendCollectWithMaxFriends;
+            Asteroid.onDeath = OnAsteroidKill;
+            Player.onDeath = OnPlayerDeath;
+            Friend.onCollectWithMaxFriends = OnFriendCollectWithMaxFriends;
 
             // create a player
             Actor.Instantiate(new Player(), null, new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2));

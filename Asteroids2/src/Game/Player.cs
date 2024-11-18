@@ -36,7 +36,6 @@ namespace Asteroids2
         public override void Start()
         {
             base.Start();
-            onDeath += Die;
             Transform.LocalScale = new Vector2(30, 30);
             Collider = new CircleCollider(this, 5);
             AddComponent(new LoopAround(this));
@@ -109,7 +108,7 @@ namespace Asteroids2
         public override void OnCollision(Actor other)
         {
             if (other is Asteroid && !_isInvincible && !_isDead)
-                onDeath();
+                Die();
         }
 
         private void Die()
@@ -122,6 +121,7 @@ namespace Asteroids2
             {
                 Destroy(child.Owner);
             }
+            onDeath();
         }
 
         private void Respawn()

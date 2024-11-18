@@ -164,6 +164,7 @@ namespace Asteroids2
                 // otherwise, destroy this guy
                 else
                 {
+                    onCollectWithMaxFriends();
                     Destroy(this);
                 }
 
