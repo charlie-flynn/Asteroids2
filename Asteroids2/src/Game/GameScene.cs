@@ -15,12 +15,22 @@ namespace Asteroids2
         private int _difficultyModifier = 0;
         private int _lives = 1;
         private double _spawnTimer = 0.0;
+        public double Score { get => _score; }
+
+        public GameScene()
+        {
+            _score = 0;
+            _difficultyModifier = 0;
+            _lives = 2;
+            _spawnTimer = 0.0;
+        }
 
         public override void Start()
         {
             base.Start();
 
-            // add the functions to the necessary delegates
+
+            // add functions to the necessary delegates
             Asteroid.onDeath += OnAsteroidKill;
             Player.onDeath += OnPlayerDeath;
             Friend.onCollectWithMaxFriends += OnFriendCollectWithMaxFriends;
