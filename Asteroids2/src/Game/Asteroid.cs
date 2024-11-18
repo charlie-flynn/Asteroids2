@@ -42,14 +42,6 @@ namespace Asteroids2
 
         public override void End()
         {
-            // if the asteroid bigger than a certain size, create two asteroids 
-            if (_radius > 20.0f)
-            {
-                Instantiate(new Asteroid(_radius / 2, _speed * 1.2f), null, Transform.GlobalPosition + new Vector2(_radius, 0), -Transform.GlobalRotationAngle - 45);
-                Instantiate(new Asteroid(_radius / 2, _speed * 1.2f), null, Transform.GlobalPosition + new Vector2(0, _radius), -Transform.GlobalRotationAngle + 45);
-            }
-
-            onDeath(_radius);
             base.End();
         }
 
@@ -59,9 +51,21 @@ namespace Asteroids2
 
             if (other is Bullet)
             {
-                Destroy(this);
+                Die();
                 Destroy(other);
             }
+        }
+
+        private void Die()
+        {
+            // if the asteroid bigger than a certain size, create two asteroids 
+            if (_radius > 20.0f)
+            {
+                Instantiate(new Asteroid(_radius / 2, _speed * 1.2f), null, Transform.GlobalPosition + new Vector2(_radius, 0), -Transform.GlobalRotationAngle - 45);
+                Instantiate(new Asteroid(_radius / 2, _speed * 1.2f), null, Transform.GlobalPosition + new Vector2(0, _radius), -Transform.GlobalRotationAngle + 45);
+            }
+            onDeath(_radius);
+            Destroy(this);
         }
     }
 }

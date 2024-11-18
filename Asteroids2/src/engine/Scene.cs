@@ -93,7 +93,7 @@ namespace Asteroids2
         {
                 foreach (Actor actor in _actors)
                 {
-                    actor.End();
+                    Actor.Destroy(actor);
                 }
         }
 

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Raylib_cs;
 using MathLibrary;
 using System.Diagnostics;
-using System.Runtime.CompilerServices;
 
 namespace Asteroids2
 {
@@ -79,8 +78,6 @@ namespace Asteroids2
 
             Scene gameScene = new GameScene();
             AddScene(gameScene);
-
-            CurrentScene.Start();
 
             while (!Raylib.WindowShouldClose())
             {

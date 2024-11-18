@@ -13,6 +13,7 @@ namespace Asteroids2
     {
         private double _score = 0;
         private int _difficultyModifier = 0;
+        private int _lives = 3;
         private double _spawnTimer = 0.0;
         private Vector2 lastAsteroidSpawnDirection;
 
@@ -20,6 +21,7 @@ namespace Asteroids2
         {
             base.Start();
 
+            // add the functions to the necessary delegates
             Asteroid.onDeath += OnAsteroidKill;
             Player.onDeath += OnPlayerDeath;
 
@@ -43,7 +45,7 @@ namespace Asteroids2
 
             _spawnTimer -= deltaTime;
 
-            Raylib.DrawText(_score.ToString(), 10, 10, 20, Color.Red);
+            Raylib.DrawText(_score.ToString() + "\n" + _lives.ToString(), 10, 10, 20, Color.Red);
 
             if (lastAsteroidSpawnDirection != null)
                 Raylib.DrawLineV(new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2), new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2) + lastAsteroidSpawnDirection * 50, Color.Blue);
@@ -57,7 +59,11 @@ namespace Asteroids2
 
         private void OnPlayerDeath()
         {
-
+            _lives--;
+            if (_lives <= 0)
+            {
+                End();
+            }
         }
 
         private void SpawnStuff(int amount)

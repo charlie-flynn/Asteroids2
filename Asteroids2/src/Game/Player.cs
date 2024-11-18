@@ -108,14 +108,14 @@ namespace Asteroids2
 
         public override void OnCollision(Actor other)
         {
-            if (other is Asteroid && !_isInvincible)
+            if (other is Asteroid && !_isInvincible && !_isDead)
                 onDeath();
         }
 
         private void Die()
         {
-            Transform.LocalPosition = new Vector2(10000000, 10000000);
             _isDead = true;
+            Transform.LocalPosition = new Vector2(10000000, 10000000);
             _respawnTimer = 2.0;
 
             foreach (Transform2D child in Transform.Children)
