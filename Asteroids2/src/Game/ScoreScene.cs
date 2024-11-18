@@ -19,6 +19,7 @@ namespace Asteroids2.src.Game
         private string[] _scoreboardNames = new string[5];
         private bool _isScoreNew;
         private bool _isScoreHigh;
+        private int _scorePlace;
         private int _screenProgress = 0;
         private Vector2 screenDimensions = new Vector2(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
 
@@ -38,13 +39,13 @@ namespace Asteroids2.src.Game
                 File.WriteAllLines(@"dat\scoreboard.dat", new string[]
                 {
                     "1000000",
-                    "Plimby",
+                    "PLIMBY",
                     "500000",
-                    "Skeebo",
+                    "SKEEBO",
                     "250000",
-                    "Skop",
+                    "SKOP",
                     "100000",
-                    "Peven",
+                    "PEVEN",
                     "2",
                     "BAD@GAME"
                 });
@@ -73,73 +74,18 @@ namespace Asteroids2.src.Game
 
             if (_isScoreNew && _screenProgress == 0)
             {
-                Raylib.DrawTextPro(new Font(), "Good Job!", new Vector2(screenDimensions.x / 2, 100), new Vector2(screenDimensions.x / 10, 0), 0, 30, 1, Color.Green);
-                Raylib.DrawTextPro(new Font(), "Enter Your Name", new Vector2(screenDimensions.x / 2, 130), new Vector2(screenDimensions.x / 10, 0), 0, 30, 1, Color.Green);
-                Raylib.DrawTextPro(new Font(), "> " + _playerName, new Vector2(screenDimensions.x / 2, 170), new Vector2(screenDimensions.x / 10, 0), 0, 30, 1, Color.Green);
-
-
-                KeyboardKey keyPressed = (KeyboardKey)Raylib.GetKeyPressed();
-                if (keyPressed != 0)
-                {
-                    if (_playerName.Length < 8)
-                    {
-                        if (keyPressed == KeyboardKey.Space)
-                        {
-                            _playerName += " ";
-                        }
-
-                        else if (keyPressed >= (KeyboardKey)65 && keyPressed <= (KeyboardKey)90)
-                        {
-                            if (keyPressed == KeyboardKey.R)
-                                _playerName += "R";
-                            else
-                                _playerName += keyPressed.ToString();
-                        }
-                        else if (keyPressed >= (KeyboardKey)48 && keyPressed <= (KeyboardKey)57)
-                        {
-                            switch (keyPressed)
-                            {
-                                case KeyboardKey.One:
-                                    _playerName += "1"; break;
-                                case KeyboardKey.Two:
-                                    _playerName += "2"; break;
-                                case KeyboardKey.Three:
-                                    _playerName += "3"; break;
-                                case KeyboardKey.Four:
-                                    _playerName += "4"; break;
-                                case KeyboardKey.Five:
-                                    _playerName += "5"; break;
-                                case KeyboardKey.Six:
-                                    _playerName += "6"; break;
-                                case KeyboardKey.Seven:
-                                    _playerName += "7"; break;
-                                case KeyboardKey.Eight:
-                                    _playerName += "8"; break;
-                                case KeyboardKey.Nine:
-                                    _playerName += "9"; break;
-                                case KeyboardKey.Zero:
-                                    _playerName += "0"; break;
-                            }
-                        }
-                    }
-
-                    if (keyPressed == KeyboardKey.Backspace && _playerName.Length != 0)
-                    {
-                        _playerName = _playerName.Remove(_playerName.Length - 1);
-                    }
-                }
-
+                EnterNameScreen();
             }
             else if (_screenProgress == 1)
             {
-
+                ScoreboardScreen();
             }
             else if (_screenProgress == 0)
             {
                 _screenProgress++;
             }
 
-            
+
 
 
         }
@@ -151,22 +97,129 @@ namespace Asteroids2.src.Game
 
         private bool RegisterNewScore()
         {
-            int j = _scoreboardScores.Length;
+            _scorePlace = _scoreboardScores.Length;
             foreach (double score in _scoreboardScores)
             {
                 if (_playerScore > score)
-                    j--;
+                    _scorePlace--;
             }
 
-            if (j == _scoreboardScores.Length)
+            if (_scorePlace == _scoreboardScores.Length)
                 return false;
             else
             {
-                _scoreboardScores[j] = _playerScore;
-                if (j == 0)
+                if (_scorePlace == 0)
                     _isScoreHigh = true;
                 return true;
-            }    
+            }
+        }
+
+        private void EnterNameScreen()
+        {
+            // if the score is the highest score, display a joyous message :)
+            if (_isScoreHigh)
+            {
+                Raylib.DrawTextPro(new Font(), "New High Score!", new Vector2(screenDimensions.x / 2, 100), new Vector2(screenDimensions.x / 10, 0), 0, 30, 1, Color.Green);
+            }
+            else
+            {
+                Raylib.DrawTextPro(new Font(), "Good Job!", new Vector2(screenDimensions.x / 2, 100), new Vector2(screenDimensions.x / 10, 0), 0, 30, 1, Color.Green);
+            }
+
+            // prompt the player to enter their name
+            Raylib.DrawTextPro(new Font(), "Enter Your Name", new Vector2(screenDimensions.x / 2, 130), new Vector2(screenDimensions.x / 10, 0), 0, 30, 1, Color.Green);
+            Raylib.DrawTextPro(new Font(), "> " + _playerName, new Vector2(screenDimensions.x / 2, 170), new Vector2(screenDimensions.x / 10, 0), 0, 30, 1, Color.Green);
+
+            // if the player pressed a key and it can be typed in, type it into the player name
+            // if they pressed backspace, remove the front-most character in the player name
+            // if the player pressed enter, proceed to the scoreboard
+            KeyboardKey keyPressed = (KeyboardKey)Raylib.GetKeyPressed();
+            if (keyPressed != 0)
+            {
+                if (_playerName.Length < 10)
+                {
+                    if (keyPressed == KeyboardKey.Space)
+                    {
+                        _playerName += " ";
+                    }
+
+                    else if (keyPressed >= (KeyboardKey)65 && keyPressed <= (KeyboardKey)90)
+                    {
+                        if (keyPressed == KeyboardKey.R)
+                            _playerName += "R";
+                        else
+                            _playerName += keyPressed.ToString();
+                    }
+                    else if (keyPressed >= (KeyboardKey)48 && keyPressed <= (KeyboardKey)57)
+                    {
+                        switch (keyPressed)
+                        {
+                            case KeyboardKey.One:
+                                _playerName += "1"; break;
+                            case KeyboardKey.Two:
+                                _playerName += "2"; break;
+                            case KeyboardKey.Three:
+                                _playerName += "3"; break;
+                            case KeyboardKey.Four:
+                                _playerName += "4"; break;
+                            case KeyboardKey.Five:
+                                _playerName += "5"; break;
+                            case KeyboardKey.Six:
+                                _playerName += "6"; break;
+                            case KeyboardKey.Seven:
+                                _playerName += "7"; break;
+                            case KeyboardKey.Eight:
+                                _playerName += "8"; break;
+                            case KeyboardKey.Nine:
+                                _playerName += "9"; break;
+                            case KeyboardKey.Zero:
+                                _playerName += "0"; break;
+                        }
+                    }
+                }
+
+                if (keyPressed == KeyboardKey.Backspace && _playerName.Length != 0)
+                {
+                    _playerName = _playerName.Remove(_playerName.Length - 1);
+                }
+
+                if (keyPressed == KeyboardKey.Enter && _playerName != "")
+                {
+                    _screenProgress = 1;
+                    _scoreboardNames[_scorePlace] = _playerName;
+                    _scoreboardScores[_scorePlace] = _playerScore;
+                    SerializeScoreboard();
+                }
+            }
+        }
+
+        private void ScoreboardScreen()
+        {
+            int yOffset = 120;
+            for (int i = 0; i < _scoreboardScores.Length; i++)
+            {
+                Raylib.DrawTextPro(new Font(), "#" + (i + 1) + ": " + _scoreboardScores[i],
+                    new Vector2(screenDimensions.x / 2 - screenDimensions.x / 3, yOffset), new Vector2(screenDimensions.x / 10, 0), 0, 30, 1, Color.Green);
+                Raylib.DrawTextPro(new Font(), _scoreboardNames[i],
+                    new Vector2(screenDimensions.x / 2 + screenDimensions.x / 3, yOffset), new Vector2(screenDimensions.x / 10, 0), 0, 30, 1, Color.Green);
+
+                yOffset += 30;
+            }
+            Raylib.DrawTextPro(new Font(), "Press Enter to return to title",
+             new Vector2(screenDimensions.x / 2, screenDimensions.y - screenDimensions.y / 8), new Vector2(screenDimensions.x / 4, 0), 0, 30, 1, Color.Green);
+        }
+
+        private void SerializeScoreboard()
+        {
+            using (StreamWriter writer = new StreamWriter(@"dat\scoreboard.dat"))
+            {
+                for (int i = 0; i < _scoreboardScores.Length; i++)
+                {
+                    writer.WriteLine(_scoreboardScores[i]);
+                    writer.WriteLine(_scoreboardNames[i]);
+                }
+            }
+
         }
     }
 }
