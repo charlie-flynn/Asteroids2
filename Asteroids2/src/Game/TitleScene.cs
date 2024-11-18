@@ -9,13 +9,13 @@ using System.IO;
 
 namespace Asteroids2
 {
-    internal class TitleScreen : Scene
+    internal class TitleScene : Scene
     {
 
         private Vector2 _screenDimensions = new Vector2(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
         private byte _scoreboardWipeProgress;
 
-        public TitleScreen()
+        public TitleScene()
         {
 
         }

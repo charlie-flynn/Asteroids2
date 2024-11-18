@@ -234,7 +234,7 @@ namespace Asteroids2
              new Vector2(screenDimensions.x / 2, screenDimensions.y - screenDimensions.y / 8), new Vector2(screenDimensions.x / 4, 0), 0, 30, 1, Color.Green);
 
             if (Raylib.IsKeyPressed(KeyboardKey.Enter))
-                Game.CurrentScene = new TitleScreen();
+                Game.CurrentScene = new TitleScene();
         }
 
         private void SerializeScoreboard()

@@ -80,7 +80,7 @@ namespace Asteroids2
             long currentTime = 0;
             long lastTime = 0;
 
-            Scene gameScene = new TitleScreen();
+            Scene gameScene = new TitleScene();
             AddScene(gameScene);
 
             while (!Raylib.WindowShouldClose())

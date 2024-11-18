@@ -29,8 +29,8 @@ namespace Asteroids2
         {
             base.Start();
 
-
-            // add functions to the necessary delegates
+            // add functions to the necessary delegates if theyre not already there
+            // TO DO: make it not add the same function more than once
             Asteroid.onDeath += OnAsteroidKill;
             Player.onDeath += OnPlayerDeath;
             Friend.onCollectWithMaxFriends += OnFriendCollectWithMaxFriends;
