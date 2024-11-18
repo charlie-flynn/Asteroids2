@@ -13,8 +13,8 @@ namespace Asteroids2
     {
         private string _playerName = "";
         private double _playerScore;
-        private double[] _scoreboardScores = new double[5];
-        private string[] _scoreboardNames = new string[5];
+        private double[] _scoreboardScores = new double[10];
+        private string[] _scoreboardNames = new string[10];
         private bool _isScoreNew;
         private bool _isScoreHigh;
         private int _scorePlace;
@@ -36,16 +36,26 @@ namespace Asteroids2
             if (!File.Exists(@"dat\scoreboard.dat"))
                 File.WriteAllLines(@"dat\scoreboard.dat", new string[]
                 {
-                    "1000000",
+                    "10000000",
                     "PLIMBY",
+                    "5000000",
+                    "DINGLE",
+                    "2500000",
+                    "QUARM",
+                    "1000000",
+                    "SHLARP",
                     "500000",
                     "SKEEBO",
                     "250000",
                     "SKOP",
                     "100000",
                     "PEVEN",
+                    "5000",
+                    "MID",
                     "2",
-                    "BAD@GAME"
+                    "BAD@GAME",
+                    "1",
+                    "WORSE"
                 });
 
 
@@ -92,14 +102,14 @@ namespace Asteroids2
 
         private bool RegisterNewScore()
         {
-            _scorePlace = _scoreboardScores.Length;
+            _scorePlace = _scoreboardScores.Length - 1;
             foreach (double score in _scoreboardScores)
             {
                 if (_playerScore > score)
                     _scorePlace--;
             }
 
-            if (_scorePlace == _scoreboardScores.Length)
+            if (_scorePlace == _scoreboardScores.Length - 1)
                 return false;
             else
             {
