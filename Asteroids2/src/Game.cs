@@ -80,7 +80,7 @@ namespace Asteroids2
             long currentTime = 0;
             long lastTime = 0;
 
-            Scene gameScene = new GameScene();
+            Scene gameScene = new TitleScreen();
             AddScene(gameScene);
 
             while (!Raylib.WindowShouldClose())
@@ -88,7 +88,7 @@ namespace Asteroids2
                 currentTime = stopwatch.ElapsedMilliseconds;
 
                 Raylib.BeginDrawing();
-                Raylib.ClearBackground(Color.White);
+                Raylib.ClearBackground(Color.Black);
 
                 CurrentScene.Update(deltaTime);
 

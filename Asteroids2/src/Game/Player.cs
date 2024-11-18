@@ -16,7 +16,7 @@ namespace Asteroids2
         private float _acceleration = 10.0f;
         private float _decceleration = 12.0f;
         private float _turnSpeed = 200.0f;
-        private Color _color = Color.Pink;
+        private Color _color = Color.White;
         private float _shootCooldown = 0.0f;
         private bool _isDead = false;
         private double _respawnTimer;
@@ -58,12 +58,12 @@ namespace Asteroids2
             // invincible co
             if (_isInvincible)
             {
-                _color = Color.Blue;
+                _color = Color.Red;
                 _invincibleTimer -= deltaTime;
                 if (_invincibleTimer <= 0.0)
                 {
                     _isInvincible = false;
-                    _color = Color.Pink;
+                    _color = Color.White;
                 }
             }
 
@@ -103,7 +103,7 @@ namespace Asteroids2
             Raylib.DrawLineV
             (Transform.GlobalPosition,
             Transform.GlobalPosition + (Transform.Forward * Transform.LocalScale.x),
-            Color.SkyBlue);
+            Color.Black);
         }
 
         public override void OnCollision(Actor other)

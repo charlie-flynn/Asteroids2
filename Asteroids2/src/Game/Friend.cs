@@ -125,8 +125,7 @@ namespace Asteroids2
 
 
             // drwaing
-            Raylib.DrawPoly(Transform.GlobalPosition, 3, 10, -Transform.GlobalRotationAngle * (180 / (float)Math.PI), Color.Pink);
-            Raylib.DrawPolyLines(Transform.GlobalPosition, 3, 10, -Transform.GlobalRotationAngle * (180 / (float)Math.PI), Color.SkyBlue);
+            Raylib.DrawPoly(Transform.GlobalPosition, 3, 10, -Transform.GlobalRotationAngle * (180 / (float)Math.PI), Color.White);
         }
 
         public override void OnCollision(Actor other)

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Raylib_cs;
 using MathLibrary;
 using System.Security.Cryptography;
-using Asteroids2.src.Game;
 
 namespace Asteroids2
 {
@@ -46,7 +45,7 @@ namespace Asteroids2
 
             _spawnTimer -= deltaTime;
 
-            Raylib.DrawText(_score.ToString() + "\n" + _lives.ToString(), 10, 10, 20, Color.Red);
+            Raylib.DrawText(_score.ToString() + "\n\n" + _lives.ToString(), 10, 10, 40, Color.Red);
         }
 
         private void OnAsteroidKill(float radius)

@@ -7,14 +7,12 @@ using Raylib_cs;
 using System.IO;
 using MathLibrary;
 
-namespace Asteroids2.src.Game
+namespace Asteroids2
 {
     internal class ScoreScene : Scene
     {
         private string _playerName = "";
         private double _playerScore;
-        private double _nameTyped;
-        private double _timer;
         private double[] _scoreboardScores = new double[5];
         private string[] _scoreboardNames = new string[5];
         private bool _isScoreNew;
@@ -51,7 +49,7 @@ namespace Asteroids2.src.Game
                 });
 
 
-
+            // deserialize the scoreboard
             using (StreamReader reader = new StreamReader(@"dat\scoreboard.dat"))
             {
                 for (int i = 0; i < _scoreboardNames.Length; i++)
@@ -61,6 +59,7 @@ namespace Asteroids2.src.Game
                 }
             }
 
+            // compare the score the player got to the scores on the scoreboard
             _isScoreNew = RegisterNewScore();
         }
 
@@ -68,7 +67,7 @@ namespace Asteroids2.src.Game
         {
             base.Update(deltaTime);
 
-
+            // always display the player's score
             Raylib.DrawTextPro(new Font(), "Your Score", new Vector2(screenDimensions.x / 2, 10), new Vector2(screenDimensions.x / 10, 0), 0, 30, 1, Color.Green);
             Raylib.DrawTextPro(new Font(), _playerScore.ToString(), new Vector2(screenDimensions.x / 2, 40), new Vector2(screenDimensions.x / 10, 0), 0, 50, 1, Color.Green);
 
@@ -84,10 +83,6 @@ namespace Asteroids2.src.Game
             {
                 _screenProgress++;
             }
-
-
-
-
         }
 
         public override void End()
@@ -127,7 +122,7 @@ namespace Asteroids2.src.Game
             }
 
             // prompt the player to enter their name
-            Raylib.DrawTextPro(new Font(), "Enter Your Name", new Vector2(screenDimensions.x / 2, 130), new Vector2(screenDimensions.x / 10, 0), 0, 30, 1, Color.Green);
+            Raylib.DrawTextPro(new Font(), "Enter Your Name", new Vector2(screenDimensions.x / 2, 130), new Vector2(screenDimensions.x / 6, 0), 0, 30, 1, Color.Green);
             Raylib.DrawTextPro(new Font(), "> " + _playerName, new Vector2(screenDimensions.x / 2, 170), new Vector2(screenDimensions.x / 10, 0), 0, 30, 1, Color.Green);
 
             // if the player pressed a key and it can be typed in, type it into the player name
@@ -196,6 +191,8 @@ namespace Asteroids2.src.Game
         private void ScoreboardScreen()
         {
             int yOffset = 120;
+
+            // draw all of the scores on the scoreboard
             for (int i = 0; i < _scoreboardScores.Length; i++)
             {
                 Raylib.DrawTextPro(new Font(), "#" + (i + 1) + ": " + _scoreboardScores[i],
@@ -207,6 +204,9 @@ namespace Asteroids2.src.Game
             }
             Raylib.DrawTextPro(new Font(), "Press Enter to return to title",
              new Vector2(screenDimensions.x / 2, screenDimensions.y - screenDimensions.y / 8), new Vector2(screenDimensions.x / 4, 0), 0, 30, 1, Color.Green);
+
+            if (Raylib.IsKeyPressed(KeyboardKey.Enter))
+                Game.CurrentScene = new TitleScreen();
         }
 
         private void SerializeScoreboard()

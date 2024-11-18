@@ -37,7 +37,7 @@ namespace Asteroids2
             Transform.Translate(Transform.Forward * _speed * (float)deltaTime);
 
             // draw
-            Raylib.DrawCircleV(Transform.GlobalPosition, _radius, Color.Blue);
+            Raylib.DrawCircleV(Transform.GlobalPosition, _radius, Color.Green);
         }
 
         public override void End()
