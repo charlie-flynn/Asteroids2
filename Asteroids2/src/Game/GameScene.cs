@@ -15,6 +15,18 @@ namespace Asteroids2
         private int _difficultyModifier;
         private int _lives;
         private double _spawnTimer;
+        public bool AreThereAsteroids
+        {
+            get
+            {
+                foreach(Actor actor in Actors)
+                {
+                    if (actor is Asteroid)
+                        return true;
+                }
+                return false;
+            }
+        }
 
         public GameScene()
         {
@@ -36,19 +48,17 @@ namespace Asteroids2
 
             // create a player
             Actor.Instantiate(new Player(), null, new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2));
+            Actor.Instantiate(new Friend(), null, new Vector2(0, Raylib.GetScreenHeight() / 2));
         }
         public override void Update(double deltaTime)
         {
             base.Update(deltaTime);
 
-            if (_spawnTimer <= 0.0)
+            if (_spawnTimer <= 0.0 || !AreThereAsteroids)
             {
                 SpawnStuff(5 + _difficultyModifier);
 
-                _spawnTimer = 25.0 - (_difficultyModifier);
-
-                if (_spawnTimer < 5.0)
-                    _spawnTimer = 5.0;
+                _spawnTimer = 30.0;
             }
 
             _difficultyModifier = (int)_score / 100000;
@@ -80,7 +90,7 @@ namespace Asteroids2
         private void SpawnStuff(int amount)
         {
             // spawn all of the asteroids
-            for (int i = 0; i < amount; i++)
+            for (int i = 0; i <= amount; i++)
             {
                 // generate random position and angle variance
                 int rng = RandomNumberGenerator.GetInt32(1, 101);

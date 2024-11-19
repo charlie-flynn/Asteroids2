@@ -39,13 +39,13 @@ namespace Asteroids2
             if (!File.Exists(@"dat\scoreboard.dat"))
                 File.WriteAllLines(@"dat\scoreboard.dat", new string[]
                 {
-                    "10000000",
-                    "PLIMBY",
-                    "5000000",
-                    "DINGLE",
-                    "2500000",
-                    "QUARM",
                     "1000000",
+                    "PLIMBY",
+                    "500000",
+                    "DINGLE",
+                    "250000",
+                    "QUARM",
+                    "100000",
                     "SHLARP",
                     "500000",
                     "SKEEBO",
