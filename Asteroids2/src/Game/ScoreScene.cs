@@ -11,13 +11,15 @@ namespace Asteroids2
 {
     internal class ScoreScene : Scene
     {
+        private Color _rainbow = new Color(255, 0, 0, 255);
+        private bool? _colorShift = true;
         private string _playerName = "";
         private double _playerScore;
         private double[] _scoreboardScores = new double[10];
         private string[] _scoreboardNames = new string[10];
         private bool _isScoreNew;
         private bool _isScoreHigh;
-        private int _scorePlace;
+        private int _playerScorePlace;
         private int _screenProgress = 0;
         private bool _errorOccured;
         private Vector2 screenDimensions = new Vector2(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
@@ -51,12 +53,12 @@ namespace Asteroids2
                     "SKOP",
                     "100000",
                     "PEVEN",
+                    "95000",
+                    "MARB",
+                    "50000",
+                    "KLARC",
                     "5000",
-                    "MID",
-                    "2",
-                    "BAD@GAME",
-                    "1",
-                    "WORSE"
+                    "BAD@GAME"
                 });
 
 
@@ -85,11 +87,14 @@ namespace Asteroids2
         public override void Update(double deltaTime)
         {
             base.Update(deltaTime);
+            UpdateRainbowColor();
 
             // always display the player's score
             Raylib.DrawTextPro(new Font(), "Your Score", new Vector2(screenDimensions.x / 2, 10), new Vector2(screenDimensions.x / 10, 0), 0, 30, 1, Color.Green);
             Raylib.DrawTextPro(new Font(), _playerScore.ToString(), new Vector2(screenDimensions.x / 2, 40), new Vector2(screenDimensions.x / 10, 0), 0, 50, 1, Color.Green);
 
+            // if the score made it to the scoreboard, prompt the player to enter their name into the scoreboard
+            // otherwise proceed directly to the scoreboard screen
             if (_isScoreNew && _screenProgress == 0)
             {
                 EnterNameScreen();
@@ -111,18 +116,25 @@ namespace Asteroids2
 
         private bool RegisterNewScore()
         {
-            _scorePlace = _scoreboardScores.Length - 1;
-            foreach (double score in _scoreboardScores)
-            {
-                if (_playerScore > score)
-                    _scorePlace--;
-            }
 
-            if (_scorePlace == _scoreboardScores.Length - 1)
+            // set _playerScorePlace to an arbitrary number
+            _playerScorePlace = 99;
+
+            for (int i = 0; i < _scoreboardScores.Length; i++)
+            {
+                if (_playerScore > _scoreboardScores[i])
+                {
+                    _playerScorePlace = i;
+                    break;
+                }
+            }
+            if (_playerScorePlace == 99)
+            {
                 return false;
+            }
             else
             {
-                if (_scorePlace == 0)
+                if (_playerScorePlace == 0)
                     _isScoreHigh = true;
                 return true;
             }
@@ -133,7 +145,7 @@ namespace Asteroids2
             // if the score is the highest score, display a joyous message :)
             if (_isScoreHigh)
             {
-                Raylib.DrawTextPro(new Font(), "New High Score!", new Vector2(screenDimensions.x / 2, 100), new Vector2(screenDimensions.x / 10, 0), 0, 30, 1, Color.Green);
+                Raylib.DrawTextPro(new Font(), "New High Score!", new Vector2(screenDimensions.x / 2, 100), new Vector2(screenDimensions.x / 7, 0), 0, 30, 1, _rainbow);
             }
             else
             {
@@ -199,9 +211,9 @@ namespace Asteroids2
 
                 if (keyPressed == KeyboardKey.Enter && _playerName != "")
                 {
+                    UpdateScoreboard();
                     _screenProgress = 1;
-                    _scoreboardNames[_scorePlace] = _playerName;
-                    _scoreboardScores[_scorePlace] = _playerScore;
+
                     SerializeScoreboard();
                 }
             }
@@ -211,10 +223,18 @@ namespace Asteroids2
         {
             int yOffset = 120;
 
-            // draw all of the scores on the scoreboard
+            // draw all of the scores on the scoreboard, drawing the first one in rainbow :3
             if (!_errorOccured)
             {
-                for (int i = 0; i < _scoreboardScores.Length; i++)
+
+                Raylib.DrawTextPro(new Font(), "#1: " + _scoreboardScores[0],
+                    new Vector2(screenDimensions.x / 2 - screenDimensions.x / 3, yOffset), new Vector2(screenDimensions.x / 10, 0), 0, 30, 1, _rainbow);
+                Raylib.DrawTextPro(new Font(), _scoreboardNames[0],
+                    new Vector2(screenDimensions.x / 2 + screenDimensions.x / 3, yOffset), new Vector2(screenDimensions.x / 10, 0), 0, 30, 1, _rainbow);
+
+                yOffset += 30;
+
+                for (int i = 1; i < _scoreboardScores.Length; i++)
                 {
                     Raylib.DrawTextPro(new Font(), "#" + (i + 1) + ": " + _scoreboardScores[i],
                         new Vector2(screenDimensions.x / 2 - screenDimensions.x / 3, yOffset), new Vector2(screenDimensions.x / 10, 0), 0, 30, 1, Color.Green);
@@ -257,6 +277,58 @@ namespace Asteroids2
             }
 
 
+        }
+
+        private void UpdateScoreboard()
+        {
+            double[] tempScores = new double[10];
+            string[] tempNames = new string[10];
+            int j = 0;
+
+            // copy the scores into the temp array except for the last one
+            // placing the player's score in its place
+            for (int i = 0; i < _scoreboardScores.Length; i++)
+            {
+                if (i != _playerScorePlace)
+                {
+                    tempScores[i] = _scoreboardScores[j];
+                    tempNames[i] = _scoreboardNames[j];
+                    j++;
+                }
+                else
+                {
+                    tempScores[i] = _playerScore;
+                    tempNames[i] = _playerName;
+                }
+            }
+
+            _scoreboardScores = tempScores;
+            _scoreboardNames = tempNames;
+        }
+
+        private void UpdateRainbowColor()
+        {
+            if (_colorShift == true)
+            {
+                _rainbow.B++;
+                _rainbow.R--;
+                if (_rainbow.B == 255)
+                    _colorShift = false;
+            }
+            else if (_colorShift == false)
+            {
+                _rainbow.G++;
+                _rainbow.B--;
+                if (_rainbow.G == 255)
+                    _colorShift = null;
+            }
+            else
+            {
+                _rainbow.R++;
+                _rainbow.G--;
+                if (_rainbow.R == 255)
+                    _colorShift = true;
+            }
         }
     }
 }

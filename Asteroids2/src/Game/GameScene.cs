@@ -20,7 +20,7 @@ namespace Asteroids2
         {
             _score = 0;
             _difficultyModifier = 0;
-            _lives = 3;
+            _lives = 1;
             _spawnTimer = 0.0;
         }
 
@@ -45,13 +45,13 @@ namespace Asteroids2
             {
                 SpawnStuff(5 + _difficultyModifier);
 
-                _spawnTimer = 25 - (_difficultyModifier * 2);
+                _spawnTimer = 25.0 - (_difficultyModifier);
 
                 if (_spawnTimer < 5.0)
                     _spawnTimer = 5.0;
             }
 
-            _difficultyModifier = (int)_score / 250000;
+            _difficultyModifier = (int)_score / 100000;
 
             _spawnTimer -= deltaTime;
 
