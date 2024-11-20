@@ -20,6 +20,7 @@ namespace Asteroids2
         private bool _isScoreHigh;
         private int _playerScorePlace;
         private int _screenProgress = 0;
+        private string _error;
         private bool _errorOccured;
         private Vector2 screenDimensions = new Vector2(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
 
@@ -84,7 +85,7 @@ namespace Asteroids2
                     catch (Exception e)
                     {
                         _errorOccured = true;
-                        Console.WriteLine(e);
+                        _error = e.ToString();
                     }
                 }
             }
@@ -253,7 +254,7 @@ namespace Asteroids2
             }
             else
             {
-                Raylib.DrawTextPro(new Font(), "Scoreboard Error. \n\nPress F3 on the title screen to clear the scoreboard",
+                Raylib.DrawTextPro(new Font(), "Scoreboard Error. \n\nPress F3 on the title screen to clear the scoreboard,\n\nwhich should fix the error.\n\n" + _error,
                     new Vector2(screenDimensions.x / 2 + screenDimensions.x / 3, yOffset), new Vector2(screenDimensions.x / 1.2f, 0), 0, 30, 1, Color.Red);
             }
 
@@ -279,8 +280,8 @@ namespace Asteroids2
             }
             catch (Exception e)
             {
+                _error = e.ToString();
                 _errorOccured = true;
-                Console.WriteLine(e);
             }
 
 

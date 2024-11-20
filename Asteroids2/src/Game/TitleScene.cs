@@ -15,6 +15,7 @@ namespace Asteroids2
         private Vector2 _screenDimensions = new Vector2(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
         private byte _scoreboardWipeProgress;
         private RainbowColor _rainbow;
+        private string _error;
 
         public TitleScene()
         {
@@ -40,6 +41,10 @@ namespace Asteroids2
                     break;
                 case 2:
                     Raylib.DrawTextPro(new Font(), "Scoreboard wiped.",
+                new Vector2(_screenDimensions.x / 2, _screenDimensions.y / 2), new Vector2(_screenDimensions.x / 4, 0), 0, 20, 1, Color.Red);
+                    break;
+                case 3:
+                    Raylib.DrawTextPro(new Font(), _error,
                 new Vector2(_screenDimensions.x / 2, _screenDimensions.y / 2), new Vector2(_screenDimensions.x / 4, 0), 0, 20, 1, Color.Red);
                     break;
                 default:
@@ -69,11 +74,12 @@ namespace Asteroids2
 
                 try
                 {
-                File.Delete(@"dat\scoreboard.dat");
+                    File.Delete(@"dat\scoreboard.dat");
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine(e);
+                    _error = e.ToString();
+                    _scoreboardWipeProgress++;
                 }
             }
         }
