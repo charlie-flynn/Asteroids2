@@ -2,7 +2,7 @@
  
 Download the program by clicking [here](https://github.com/charlie-flynn/Asteroids2/releases/tag/v1.0), then clicking on the Asteroids2_V1.0.zip file at the top of the Assets list to download it!
 
-Now that the file is downloaded, go into your Downloads folder to find HelloDungeon_V1.0.zip. Right-click the file, then click "Extract All".
+Now that the file is downloaded, go into your Downloads folder to find Asteroids2_V1.0.zip. Right-click the file, then click "Extract All".
 
 Afterwards, open the newly extracted folder, and double-click the file named Asteroids2.exe to run the program!
 
