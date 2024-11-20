@@ -8,7 +8,9 @@ Afterwards, open the newly extracted folder, and double-click the file named Ast
 
 # How to play
 
-To move forward, press and hold W. You can also turn left and right with A and D respectively. Press the spacebar to shoot! The little white triangles that fly around at times are Friends! Pick them up to boost your firepower, or, when you have the max amount of friends, a big point boost!
+To move forward, press and hold W. You can also turn left and right with A and D respectively. Press the spacebar to shoot! 
+
+The little white triangles that fly around at times are Friends! Pick them up to boost your firepower, or, when you have the max amount of friends, a big point boost!
 
 The goal is to destroy the asteroids to gain points, to get as high as you can on the scoreboard! Can you beat my score? 
 
