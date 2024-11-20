@@ -33,27 +33,35 @@ namespace Asteroids2
         {
             base.Start();
 
+            foreach (Actor actor in Actors)
+            {
+                if (actor is Asteroid)
+                {
+                    Actor.Destroy(actor);
+                }
+            }
+
             // create the necessary files should they not exist
             if (!File.Exists(@"dat"))
                 Directory.CreateDirectory(@"dat");
             if (!File.Exists(@"dat\scoreboard.dat"))
                 File.WriteAllLines(@"dat\scoreboard.dat", new string[]
                 {
-                    "1000000",
+                    "2000000",
                     "PLIMBY",
-                    "500000",
+                    "1750000",
                     "DINGLE",
-                    "250000",
+                    "1500000",
                     "QUARM",
-                    "100000",
+                    "1000000",
                     "SHLARP",
-                    "500000",
+                    "800000",
                     "SKEEBO",
-                    "250000",
+                    "600000",
                     "SKOP",
-                    "100000",
+                    "300000",
                     "PEVEN",
-                    "95000",
+                    "100000",
                     "MARB",
                     "50000",
                     "KLARC",

@@ -53,10 +53,16 @@ namespace Asteroids2
             if (Raylib.IsKeyPressed(KeyboardKey.Enter))
                 Game.CurrentScene = new GameScene();
 
+            // delete the scoreboard if the player presses f3 twice
             if (Raylib.IsKeyPressed(KeyboardKey.F3))
             {
                 if (_scoreboardWipeProgress < 2)
+                {
                     _scoreboardWipeProgress++;
+
+                    if (_scoreboardWipeProgress != 2)
+                        return;
+                }
 
                 try
                 {
@@ -66,9 +72,7 @@ namespace Asteroids2
                 {
                     Console.WriteLine(e);
                 }
-
             }
-
         }
     }
 }

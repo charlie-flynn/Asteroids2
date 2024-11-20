@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MathLibrary;
+using Asteroids2.src.Game;
 
 namespace Asteroids2
 {
@@ -107,7 +108,7 @@ namespace Asteroids2
 
         public override void OnCollision(Actor other)
         {
-            if (other is Asteroid && !_isInvincible && !_isDead)
+            if ((other is Asteroid || other is EvilRedSkull) && !_isInvincible && !_isDead)
                 Die();
         }
 
