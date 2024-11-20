@@ -24,26 +24,28 @@ namespace Asteroids2
         {
             base.Update(deltaTime);
 
-            if (_colorShift == true)
+            // change the color based on the _colorShift bool
+            // if a color reaches the max value, change the _colorShift bool accordingly
+            switch (_colorShift)
             {
-                _rainbow.G++;
-                _rainbow.R--;
-                if (_rainbow.G == 255)
-                    _colorShift = false;
-            }
-            else if (_colorShift == false)
-            {
-                _rainbow.B++;
-                _rainbow.G--;
-                if (_rainbow.B == 255)
-                    _colorShift = null;
-            }
-            else
-            {
-                _rainbow.R++;
-                _rainbow.B--;
-                if (_rainbow.R == 255)
-                    _colorShift = true;
+                case true:
+                    _rainbow.G++;
+                    _rainbow.R--;
+                    if (_rainbow.G == 255)
+                        _colorShift = false;
+                    break;
+                case false:
+                    _rainbow.B++;
+                    _rainbow.G--;
+                    if (_rainbow.B == 255)
+                        _colorShift = null;
+                    break;
+                case null:
+                    _rainbow.R++;
+                    _rainbow.B--;
+                    if (_rainbow.R == 255)
+                        _colorShift = true;
+                    break;
             }
         }
     }

@@ -86,9 +86,9 @@ namespace Asteroids2
             if (actor.Transform.Parent != null)
                 actor.Transform.Parent.RemoveChild(actor.Transform);
 
-            // end
             actor.End();
 
+            // remove the actor from the current scene
             Game.CurrentScene.RemoveActor(actor);
         }
 
@@ -115,6 +115,7 @@ namespace Asteroids2
 
         public virtual void End()
         {
+            // end all of the actor's components
             foreach (Component component in _components)
             {
                 component.End();
@@ -178,39 +179,11 @@ namespace Asteroids2
                 }
             }
             return false;
-
-            //// create a temporary array to copy everything over and remove the specified component from
-            //// then copy it over to the component array if the component was successfully removed
-            //Component[] temp = new Component[_components.Length - 1];
-            //bool componentRemoved = false;
-            //int j = 0;
-
-            //for (int i = 0; i < _components.Length; i++)
-            //{
-            //    if (_components[i] != component)
-            //    {
-            //        temp[j] = _components[i];
-            //        j++;
-            //    }
-            //    else
-            //    {
-            //        componentRemoved = true;
-            //    }
-            //}
-
-
-            //if (componentRemoved)
-            //{
-            //    component.End();
-            //    _components = temp;
-            //}
-
-
-
         }
 
         public bool RemoveComponent<T>() where T : Component
         {
+            // remove the component if it is of the type provided
             T component = GetComponent<T>();
             if (component != null)
                 return RemoveComponent(component);
@@ -220,6 +193,7 @@ namespace Asteroids2
         // get component
         public T GetComponent<T>() where T: Component
         {
+            // return the component if it is of the type provided
             foreach (Component component in _components)
             {
                 if (component is T)

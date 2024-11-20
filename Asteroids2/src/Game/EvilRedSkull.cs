@@ -27,17 +27,13 @@ namespace Asteroids2
 
         public override void Update(double deltaTime)
         {
+            // calculate the direction and distance from the target, then move accordingly
             Vector2 directionToTarget = (Transform.GlobalPosition - _target.Transform.GlobalPosition).Normalized * -1;
             float distanceToTarget = Vector2.Distance(Transform.GlobalPosition, _target.Transform.GlobalPosition);
-            float angleToTarget;
-
-            if (Transform.GlobalPosition.y > _target.Transform.GlobalPosition.y)
-                angleToTarget = Vector2.Angle(new Vector2(1, 0), directionToTarget * -1);
-            else
-                angleToTarget = Vector2.Angle(new Vector2(1, 0), directionToTarget) + (float)Math.PI;
 
             Transform.Translate((directionToTarget * (_speed + (distanceToTarget))) * (float)deltaTime);
 
+            // draw the evil red skull
             Raylib.DrawCircleV(Transform.GlobalPosition, 50, Color.Red);
             Raylib.DrawRectangleV(new Vector2(Transform.GlobalPosition.x - 30, Transform.GlobalPosition.y + 30), new Vector2(20, 30), Color.Red);
             Raylib.DrawRectangleV(new Vector2(Transform.GlobalPosition.x + 10, Transform.GlobalPosition.y + 30), new Vector2(20, 30), Color.Red);

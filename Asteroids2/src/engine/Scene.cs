@@ -15,14 +15,14 @@ namespace Asteroids2
 
         public void AddActor(Actor actor)
         {
-            // add actor to the add actor queue if it isnt already there
+            // add actor to the add actor queue if it isnt already in _actors
             if (!_actors.Contains(actor))
                  _addedActors.Add(actor);
         }
 
         public bool RemoveActor(Actor actor)
         {
-            // add actor to the remove actor queue if it is there
+            // add actor to the remove actor queue if it is in _actors
             if (_actors.Contains(actor))
             {
                 _removedActors.Add(actor);
@@ -34,6 +34,7 @@ namespace Asteroids2
 
         public virtual void Start()
         {
+            // intialize the various lists that contain actors
             _actors = new List<Actor>();
             _addedActors = new List<Actor>();
             _removedActors = new List<Actor>();
@@ -91,10 +92,11 @@ namespace Asteroids2
 
         public virtual void End()
         {
-                foreach (Actor actor in _actors)
-                {
-                    Actor.Destroy(actor);
-                }
+            // destroy all of the actors that still exist
+            foreach (Actor actor in _actors)
+            {
+                Actor.Destroy(actor);
+            }
         }
 
         

@@ -12,7 +12,6 @@ namespace Asteroids2
     internal class ScoreScene : Scene
     {
         private RainbowColor _rainbow;
-        private bool? _colorShift = true;
         private string _playerName = "";
         private double _playerScore;
         private double[] _scoreboardScores = new double[10];
@@ -49,6 +48,8 @@ namespace Asteroids2
             if (!File.Exists(@"dat\scoreboard.dat"))
                 File.WriteAllLines(@"dat\scoreboard.dat", new string[]
                 {
+                    "4610000",
+                    "CHARLIE",
                     "2000000",
                     "PLIMBY",
                     "1750000",
@@ -65,8 +66,6 @@ namespace Asteroids2
                     "PEVEN",
                     "100000",
                     "MARB",
-                    "50000",
-                    "KLARC",
                     "5000",
                     "BAD@GAME"
                 });
@@ -222,7 +221,6 @@ namespace Asteroids2
                 {
                     UpdateScoreboard();
                     _screenProgress = 1;
-
                     SerializeScoreboard();
                 }
             }
