@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MathLibrary;
-using Asteroids2.src.Game;
 
 namespace Asteroids2
 {

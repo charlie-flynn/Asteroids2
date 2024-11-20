@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using MathLibrary;
 using Raylib_cs;
 
-namespace Asteroids2.src.Game
+namespace Asteroids2
 {
     internal class EvilRedSkull : Actor
     {

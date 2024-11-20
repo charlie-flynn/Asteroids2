@@ -14,6 +14,7 @@ namespace Asteroids2
 
         private Vector2 _screenDimensions = new Vector2(Raylib.GetScreenWidth(), Raylib.GetScreenHeight());
         private byte _scoreboardWipeProgress;
+        private RainbowColor _rainbow;
 
         public TitleScene()
         {
@@ -23,12 +24,14 @@ namespace Asteroids2
         public override void Start()
         {
             base.Start();
+            _rainbow = (RainbowColor)Actor.Instantiate(new RainbowColor());
         }
 
         public override void Update(double deltaTime)
         {
             base.Update(deltaTime);
 
+            // message to appear when the player wants to wipe the scoreboard
             switch (_scoreboardWipeProgress)
             {
                 case 1:
@@ -45,7 +48,7 @@ namespace Asteroids2
 
 
             Raylib.DrawTextPro(new Font(), "Asteroids 2",
-        new Vector2(_screenDimensions.x / 2, 60), new Vector2(_screenDimensions.x / 4, 0), 0, 80, 1, Color.Green);
+        new Vector2(_screenDimensions.x / 2, 60), new Vector2(_screenDimensions.x / 4, 0), 0, 80, 1, _rainbow.Rainbow);
 
             Raylib.DrawTextPro(new Font(), "Press Enter to Start",
         new Vector2(_screenDimensions.x / 2, _screenDimensions.y - _screenDimensions.y / 6), new Vector2(_screenDimensions.x / 4, 0), 0, 40, 1, Color.Green);

@@ -11,7 +11,7 @@ namespace Asteroids2
 {
     internal class ScoreScene : Scene
     {
-        private Color _rainbow = new Color(255, 0, 0, 255);
+        private RainbowColor _rainbow;
         private bool? _colorShift = true;
         private string _playerName = "";
         private double _playerScore;
@@ -32,6 +32,8 @@ namespace Asteroids2
         public override void Start()
         {
             base.Start();
+
+            _rainbow = (RainbowColor)Actor.Instantiate(new RainbowColor());
 
             foreach (Actor actor in Actors)
             {
@@ -95,7 +97,6 @@ namespace Asteroids2
         public override void Update(double deltaTime)
         {
             base.Update(deltaTime);
-            UpdateRainbowColor();
 
             // always display the player's score
             Raylib.DrawTextPro(new Font(), "Your Score", new Vector2(screenDimensions.x / 2, 10), new Vector2(screenDimensions.x / 10, 0), 0, 30, 1, Color.Green);
@@ -153,7 +154,7 @@ namespace Asteroids2
             // if the score is the highest score, display a joyous message :)
             if (_isScoreHigh)
             {
-                Raylib.DrawTextPro(new Font(), "New High Score!", new Vector2(screenDimensions.x / 2, 100), new Vector2(screenDimensions.x / 7, 0), 0, 30, 1, _rainbow);
+                Raylib.DrawTextPro(new Font(), "New High Score!", new Vector2(screenDimensions.x / 2, 100), new Vector2(screenDimensions.x / 7, 0), 0, 30, 1, _rainbow.Rainbow);
             }
             else
             {
@@ -236,9 +237,9 @@ namespace Asteroids2
             {
 
                 Raylib.DrawTextPro(new Font(), "#1: " + _scoreboardScores[0],
-                    new Vector2(screenDimensions.x / 2 - screenDimensions.x / 3, yOffset), new Vector2(screenDimensions.x / 10, 0), 0, 30, 1, _rainbow);
+                    new Vector2(screenDimensions.x / 2 - screenDimensions.x / 3, yOffset), new Vector2(screenDimensions.x / 10, 0), 0, 30, 1, _rainbow.Rainbow);
                 Raylib.DrawTextPro(new Font(), _scoreboardNames[0],
-                    new Vector2(screenDimensions.x / 2 + screenDimensions.x / 3, yOffset), new Vector2(screenDimensions.x / 10, 0), 0, 30, 1, _rainbow);
+                    new Vector2(screenDimensions.x / 2 + screenDimensions.x / 3, yOffset), new Vector2(screenDimensions.x / 10, 0), 0, 30, 1, _rainbow.Rainbow);
 
                 yOffset += 30;
 
@@ -312,31 +313,6 @@ namespace Asteroids2
 
             _scoreboardScores = tempScores;
             _scoreboardNames = tempNames;
-        }
-
-        private void UpdateRainbowColor()
-        {
-            if (_colorShift == true)
-            {
-                _rainbow.B++;
-                _rainbow.R--;
-                if (_rainbow.B == 255)
-                    _colorShift = false;
-            }
-            else if (_colorShift == false)
-            {
-                _rainbow.G++;
-                _rainbow.B--;
-                if (_rainbow.G == 255)
-                    _colorShift = null;
-            }
-            else
-            {
-                _rainbow.R++;
-                _rainbow.G--;
-                if (_rainbow.R == 255)
-                    _colorShift = true;
-            }
         }
     }
 }
