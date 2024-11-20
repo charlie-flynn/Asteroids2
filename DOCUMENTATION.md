@@ -25,11 +25,15 @@
 | Normalize()                      | Makes the vector normalized, then returns the vector.                         |
 | ToString()                       | Returns the vector converted to a string.                                     |
 | DotProduct(Vector2 other)        | Returns the dot product of the current vector and one other vector.           |
-| DotProduct(Vector2 a, Vector2 b) | Returns the dot product of two vectors.                                       |
 | Distance(Vector2 other)          | Returns the distance between the current point and one other point as a float.|
-| Distance(Vector2 a, Vector2 b)   | Returns the distance between two different points as a float.                 |
 | Angle(Vector2 other)             | Returns the angle between the current vector and one other vector in radians. |
-| Angle(Vector2 a, Vector2 b)      | Returns the angle between two different vectors in radians.                   |
+
+## Static Functions
+| Name                               | Description                                                   |
+|------------------------------------|---------------------------------------------------------------|
+| DotProduct(Vector2 a, Vector2 b)   | Returns the dot product of two vectors.                       |
+| Distance(Vector2 a, Vector2 b)     | Returns the distance between two different points as a float. |
+| Angle(Vector2 a, Vector2 b)        | Returns the angle between two different vectors in radians.   |
 
 ## Operators
 | Name                            |                                           Description     |
@@ -69,13 +73,17 @@
 | Normalize()                        | Makes the vector normalized, then returns the vector.                          |
 | ToString()                         | Returns the vector converted to a string.                                      |
 | CrossProduct(Vector3 other)        | Returns the cross product of the current vector and one other vector.          |
-| CrossProduct(Vector3 a, Vector3 b) | Returns the cross product of two different vectors.                            |
 | DotProduct(Vector3 other)          | Returns the dot product of the current vector and one other vector.            |
-| DotProduct(Vector3 a, Vector3 b)   | Returns the dot product of two vectors.                                        |
 | Distance(Vector3 other)            | Returns the distance between the current point and one other point as a float. |
-| Distance(Vector3 a, Vector3 b)     | Returns the distance between two different points as a float.                  |
 | Angle(Vector3 other)               | Returns the angle between the current vector and one other vector in radians.  |
-| Angle(Vector3 a, Vector3 b)        | Returns the angle between two different vectors in radians.                    |
+
+## Static Functions
+| Name                               | Description                                                   |
+|------------------------------------|---------------------------------------------------------------|
+| CrossProduct(Vector3 a, Vector3 b) | Returns the cross product of two different vectors.           |
+| DotProduct(Vector3 a, Vector3 b)   | Returns the dot product of two vectors.                       |
+| Distance(Vector3 a, Vector3 b)     | Returns the distance between two different points as a float. |
+| Angle(Vector3 a, Vector3 b)        | Returns the angle between two different vectors in radians.   |
 
 ## Operators
 | Name                            |                                           Description     |
@@ -114,7 +122,7 @@
 |------------------------------------|--------------------------------------------------------------------------------|
 | Normalize()                        | Makes the vector normalized, then returns the vector.                          |
 | ToString()                         | Returns the vector converted to a string.                                      |
-| CrossProduct(Vector4 other)        | Returns the cross product of the current vector and one other vector, ignoring the w axis.|
+| CrossProduct(Vector4 other)        | Returns the cross product of the current vector and one other vector, setting the w axis to 0.|
 | CrossProduct(Vector4 a, Vector4 b) | Returns the cross product of two different vectors, ignoring the w axis.       |
 | DotProduct(Vector4 other)          | Returns the dot product of the current vector and one other vector.            |
 | DotProduct(Vector4 a, Vector4 b)   | Returns the dot product of two vectors.                                        |
@@ -122,6 +130,14 @@
 | Distance(Vector4 a, Vector4 b)     | Returns the distance between two different points as a float.                  |
 | Angle(Vector4 other)               | Returns the angle between the current vector and one other vector in radians.  |
 | Angle(Vector4 a, Vector4 b)        | Returns the angle between two different vectors in radians.                    |
+
+## Static Functions
+| Name                               | Description                                                   |
+|------------------------------------|---------------------------------------------------------------|
+| CrossProduct(Vector4 a, Vector4 b) | Returns the cross product of two different vectors, setting the w axis to 0.|
+| DotProduct(Vector4 a, Vector4 b)   | Returns the dot product of two vectors.                       |
+| Distance(Vector4 a, Vector4 b)     | Returns the distance between two different points as a float. |
+| Angle(Vector4 a, Vector4 b)        | Returns the angle between two different vectors in radians.   |
 
 ## Operators
 | Name                            |                                           Description     |
@@ -157,10 +173,14 @@
 | Name                                | Description                                         |
 |-------------------------------------|-----------------------------------------------------|
 | ToString()                          | Returns the matrix converted into a string.         |
+| Transpose()                         | Transposes the matrix, rotating it diagonally.      |
+
+## Static Functions
+| Name                                | Description                                         |
+|-------------------------------------|-----------------------------------------------------|
 | CreateTranslation(float x, float y) | Returns a translation matrix with the given values. |
 | CreateRotation(float radians)       | Returns a rotation matrix using the given value.    |
 | CreateScale(float x, float y)       | Returns a scale matrix with the given values.       |
-| Transpose()                         | Transposes the matrix, rotating it diagonally.      |
 
  ## Operators
 | Name                    | Description                                                                  |
@@ -189,10 +209,14 @@
 | Name                           | Description                                    |
 |--------------------------------|------------------------------------------------|
 | ToString()                     | Returns the matrix converted into a string.    |
+| Transpose()                    | Transposes the matrix, rotating it diagonally. |
+
+## Static Functions
+| Name                           | Description                                    |
+|--------------------------------|------------------------------------------------|
 | CreateRotationX(float radians) | Returns a rotation matrix for the X axis.      |
 | CreateRotationY(float radians) | Returns a rotation matrix for the Y axis.      |
 | CreateRotationZ(float radians) | Returns a rotation matrix for the Z axis.      |
-| Transpose()                    | Transposes the matrix, rotating it diagonally. |
 
  ## Operators
 | Name                    | Description                                                                  |
