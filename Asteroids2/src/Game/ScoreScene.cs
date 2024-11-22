@@ -49,7 +49,7 @@ namespace Asteroids2
             if (!File.Exists(@"dat\scoreboard.dat"))
                 File.WriteAllLines(@"dat\scoreboard.dat", new string[]
                 {
-                    "4610000",
+                    "11017500",
                     "CHARLIE",
                     "2000000",
                     "PLIMBY",
