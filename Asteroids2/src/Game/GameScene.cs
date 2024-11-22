@@ -95,6 +95,9 @@ namespace Asteroids2
         private void OnPlayerDeath()
         {
             // lower your lives, and if your lives are 0 or lower, move on to the score scene
+            // also spawn an explosion
+            Actor.Instantiate(new Explosion(), null, _player.Transform.GlobalPosition);
+
             _lives--;
             if (_lives <= 0)
             {

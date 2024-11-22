@@ -113,6 +113,7 @@ namespace Asteroids2
 
         private void Die()
         {
+            onDeath();
             _isDead = true;
             Transform.LocalPosition = new Vector2(10000000, 10000000);
             _respawnTimer = 2.0;
@@ -121,7 +122,6 @@ namespace Asteroids2
             {
                 Destroy(child.Owner);
             }
-            onDeath();
         }
 
         private void Respawn()
