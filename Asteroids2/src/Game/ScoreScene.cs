@@ -283,8 +283,6 @@ namespace Asteroids2
                 _error = e.ToString();
                 _errorOccured = true;
             }
-
-
         }
 
         private void UpdateScoreboard()
