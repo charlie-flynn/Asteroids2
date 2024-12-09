@@ -129,6 +129,8 @@ namespace Asteroids2
             // set _playerScorePlace to an arbitrary number
             _playerScorePlace = 99;
 
+            // compare the player's score to every score top down
+            // if the player's score is higher than the score, _playerScorePlace is set to that score's place
             for (int i = 0; i < _scoreboardScores.Length; i++)
             {
                 if (_playerScore > _scoreboardScores[i])

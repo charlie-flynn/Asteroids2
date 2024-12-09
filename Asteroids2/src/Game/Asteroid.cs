@@ -58,7 +58,7 @@ namespace Asteroids2
 
         private void Die()
         {
-            // if the asteroid bigger than a certain size, create two asteroids 
+            // if the asteroid is bigger than a certain size, create two asteroids 
             if (_radius > 20.0f)
             {
                 Instantiate(new Asteroid(_radius / 2, _speed * 1.2f), null, Transform.GlobalPosition + new Vector2(_radius, 0), -Transform.GlobalRotationAngle - 45);
